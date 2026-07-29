@@ -1,8 +1,10 @@
 # BGS CORNER — Corner 60 FPS
 
-A scroll-driven website for **BGS CORNER**, a premium perfume house. The hero
-section scrubs through a 150-frame product film (crystal flacon → boutique
-reveal) as you scroll, rendered on a full-screen canvas with inertial smoothing.
+A scroll-driven website for **BGS CORNER**, the House of Oud — a premium
+perfume franchise with a vision of one hundred kiosk "corners" in the world's
+finest malls. The hero scrubs through a 150-frame product film (crystal
+flacon → kiosk reveal) as you scroll, rendered on a full-screen canvas with
+inertial smoothing.
 
 ## How the frames are stored
 

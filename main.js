@@ -25,6 +25,7 @@
   const loaderPct = document.getElementById("loader-pct");
   const cue = document.getElementById("cue");
   const nav = document.getElementById("nav");
+  const frame = document.getElementById("hero-frame");
   const copies = [
     document.getElementById("copy-1"),
     document.getElementById("copy-2"),
@@ -136,6 +137,7 @@
       copies[i].style.visibility = a > 0.001 ? "visible" : "hidden";
     }
     cue.style.opacity = p < 0.04 && ready ? 1 : 0;
+    frame.style.opacity = phaseAlpha(p, PHASES[0]).toFixed(3);
   }
 
   /* ── main loop ── */
@@ -250,9 +252,9 @@
     loaderEl.classList.add("done");
     pump();
 
-    // hand the boutique section a still of the final frame — no extra
+    // hand the corner section a still of the final frame — no extra
     // image files needed in the repo
-    const img = document.getElementById("boutique-img");
+    const img = document.getElementById("corner-img");
     if (img && blobs[count - 1]) img.src = URL.createObjectURL(blobs[count - 1]);
   }
 
