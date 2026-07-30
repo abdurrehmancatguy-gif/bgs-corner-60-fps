@@ -15,6 +15,9 @@
   --sans:       "Jost", "Avenir Next", "Helvetica Neue", sans-serif;
   --ease:       cubic-bezier(.22, .61, .16, 1);
   --ease-soft:  cubic-bezier(.4, 0, .2, 1);
+  /* inset of the hero's gold frame — the nav clears it from the same value,
+     so the rule can never cut through the navigation at any viewport width */
+  --frame-inset: clamp(14px, 2.4vw, 30px);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -74,7 +77,9 @@ em { font-style: italic; }
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  padding: 1.7rem clamp(1.2rem, 4vw, 3.8rem);
+  /* top padding clears the hero frame's rule, so the nav sits inside the
+     frame rather than astride it */
+  padding: calc(var(--frame-inset) + 1.15rem) clamp(1.2rem, 4vw, 3.8rem) 1.25rem;
   transition: background .6s var(--ease-soft), padding .6s var(--ease-soft),
               box-shadow .6s var(--ease-soft);
 }
@@ -178,7 +183,7 @@ em { font-style: italic; }
 /* double gold rule, present at the opening of the film */
 .hero-frame {
   position: absolute;
-  inset: clamp(14px, 2.4vw, 30px);
+  inset: var(--frame-inset);
   border: 1px solid rgba(201, 163, 90, .34);
   pointer-events: none;
 }
