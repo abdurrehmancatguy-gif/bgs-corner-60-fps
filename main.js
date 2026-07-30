@@ -20,7 +20,7 @@
      served without cache headers by most static hosts, so browsers will happily
      reuse a stale copy for a long time; versioning the URL makes a rebuild
      reach visitors who already have the old film cached. */
-  const FILM_VERSION = "2-deep-oud";
+  const FILM_VERSION = "3";
 
   /* Quality tiers, best first. `min` is the required viewport width in
      device pixels; AVIF tiers are skipped when the browser can't decode it. */
