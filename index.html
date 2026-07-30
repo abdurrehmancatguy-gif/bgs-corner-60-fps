@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BGS CORNER — The House of Oud</title>
-  <meta name="description" content="BGS CORNER — the house of oud. Rare ouds in crystal-cut flacons, poured one corner at a time. Dubai, and one hundred corners to come.">
+  <meta name="description" content="BGS CORNER — the house of oud. Vintage ouds in crystal-cut flacons, poured one corner at a time. Dubai, and one hundred corners to come.">
+  <meta name="theme-color" content="#0b0906">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0906'/%3E%3Cpath d='M32 10 L50 32 L32 54 L14 32 Z' fill='none' stroke='%23c9a35a' stroke-width='3'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +13,8 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+  <div class="progress" aria-hidden="true"><b id="progress-bar"></b></div>
 
   <header class="nav" id="nav">
     <a class="nav-brand" href="#top">BGS&nbsp;CORNER</a>
@@ -21,18 +24,19 @@
       <a href="#collection">Collection</a>
       <a href="#corner">The Corner</a>
     </nav>
+    <a class="nav-cta" href="#partner">Partnership</a>
   </header>
 
   <!-- ══════════════════ HERO — scroll-driven film ══════════════════ -->
   <section class="hero" id="top">
     <div class="hero-sticky">
-      <canvas id="film" aria-label="A crystal BGS CORNER flacon of oud, revealed in the Dubai corner boutique"></canvas>
+      <canvas id="film" aria-label="A crystal BGS CORNER flacon of vintage oud, revealed in the Dubai corner boutique"></canvas>
       <div class="hero-vignette"></div>
       <div class="hero-frame" id="hero-frame" aria-hidden="true"></div>
 
       <div class="hero-copy" id="copy-1">
         <p class="kicker"><i></i>Maison de l'Oud<i></i></p>
-        <h1 class="brand">BGS<span class="brand-dot">&#9670;</span>CORNER</h1>
+        <h1 class="brand" data-letters>BGS<span class="brand-dot">&#9670;</span>CORNER</h1>
         <p class="tagline">The House of Oud &mdash; Duba&iuml;</p>
       </div>
 
@@ -51,11 +55,13 @@
         <span>Scroll</span>
         <i></i>
       </div>
+    </div>
 
-      <div class="loader" id="loader">
-        <span class="loader-mark">BGS&nbsp;CORNER</span>
-        <span class="loader-bar"><b id="loader-fill"></b></span>
-        <span class="loader-pct" id="loader-pct">0%</span>
+    <div class="curtain" id="curtain">
+      <div class="curtain-inner">
+        <span class="curtain-mark">BGS&nbsp;&#9670;&nbsp;CORNER</span>
+        <span class="curtain-sub">Maison de l'Oud</span>
+        <span class="curtain-bar"><b id="curtain-fill"></b></span>
       </div>
     </div>
   </section>
@@ -63,50 +69,67 @@
   <!-- ══════════════════ 01 · THE HOUSE ══════════════════ -->
   <section class="section house" id="house">
     <div class="wrap">
-      <p class="kicker num reveal"><b>01</b>The House</p>
-      <h2 class="display reveal">Oud is not a scent.<br><em>It is patience, distilled.</em></h2>
-      <div class="house-grid">
-        <p class="lede reveal">Born on a quiet corner of Dubai, BGS CORNER is devoted to a
-        single material: oud &mdash; the dark, resinous heart of the agar tree, rarer by
-        weight than gold.</p>
-        <p class="body reveal">We buy standing trees, not bottled promises. Our ouds are
-        distilled the old way and left to sleep in the dark until they turn from smoke to
-        silk. Then, and only then, they are poured into full-lead crystal cut like a
+      <p class="kicker num" data-reveal><b>01</b>The House<i class="rule"></i></p>
+      <h2 class="display" data-lines>
+        <span>Oud is not a scent.</span>
+        <span><em>It is patience, distilled.</em></span>
+      </h2>
+      <div class="split">
+        <p class="lede" data-reveal>Born on a quiet corner of Dubai, BGS CORNER is devoted
+        to a single material: oud &mdash; the dark, resinous heart of the agar tree, rarer
+        by weight than gold.</p>
+        <p class="body" data-reveal>We buy standing trees, not bottled promises. Our ouds
+        are distilled the old way and left to sleep in the dark until they turn from smoke
+        to silk. Then, and only then, they are poured into full-lead crystal cut like a
         jewel &mdash; one flacon at a time, each sealed by hand in 24-karat gold leaf.</p>
       </div>
-      <div class="stats reveal">
-        <div class="stat"><b>12</b><span>years our oud sleeps</span></div>
-        <div class="stat"><b>37</b><span>ouds in the archive</span></div>
-        <div class="stat"><b>1</b><span>flacon at a time</span></div>
+      <div class="stats" data-reveal>
+        <div class="stat"><b data-count="12">12</b><span>years our oud sleeps</span></div>
+        <div class="stat"><b data-count="37">37</b><span>ouds in the archive</span></div>
+        <div class="stat"><b data-count="1">1</b><span>flacon at a time</span></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ MANIFESTO BAND ══════════════════ -->
+  <section class="manifesto">
+    <div class="wrap">
+      <blockquote data-lines>
+        <span><em>&ldquo;A great oud is not blended.</em></span>
+        <span><em>It is waited for.&rdquo;</em></span>
+      </blockquote>
+      <cite data-reveal>The House &mdash; Duba&iuml;, 2026</cite>
     </div>
   </section>
 
   <!-- ══════════════════ 02 · THE OUD ══════════════════ -->
   <section class="section oud" id="oud">
     <div class="wrap">
-      <p class="kicker num reveal"><b>02</b>The Oud</p>
-      <h2 class="display reveal">From forest<br><em>to flacon.</em></h2>
+      <p class="kicker num" data-reveal><b>02</b>The Oud<i class="rule"></i></p>
+      <h2 class="display" data-lines>
+        <span>From forest</span>
+        <span><em>to flacon.</em></span>
+      </h2>
       <div class="steps">
-        <div class="step reveal">
+        <div class="step" data-reveal>
           <span class="step-n">I</span>
           <h3>The Wood</h3>
           <p>Wild agarwood from old-growth forests of Assam and Cambodia, graded by hand, by nose, by fire.</p>
         </div>
-        <div class="step reveal">
+        <div class="step" data-reveal>
           <span class="step-n">II</span>
           <h3>The Fire</h3>
           <p>Slow hydro-distillation in copper stills &mdash; days of low flame for a few precious tolas.</p>
         </div>
-        <div class="step reveal">
+        <div class="step" data-reveal>
           <span class="step-n">III</span>
           <h3>The Sleep</h3>
           <p>The oil rests in darkness for up to twelve years, shedding smoke, gaining silk and honey.</p>
         </div>
-        <div class="step reveal">
+        <div class="step" data-reveal>
           <span class="step-n">IV</span>
           <h3>The Pour</h3>
-          <p>Into crystal cut like a diamond, sealed in gold leaf, signed by the maître who poured it.</p>
+          <p>Into crystal cut like a diamond, sealed in gold leaf, signed by the ma&icirc;tre who poured it.</p>
         </div>
       </div>
     </div>
@@ -115,28 +138,31 @@
   <!-- ══════════════════ 03 · COLLECTION ══════════════════ -->
   <section class="section collection" id="collection">
     <div class="wrap">
-      <p class="kicker num reveal"><b>03</b>The Collection</p>
-      <h2 class="display reveal">Three ouds.<br><em>One signature.</em></h2>
+      <p class="kicker num" data-reveal><b>03</b>The Collection<i class="rule"></i></p>
+      <h2 class="display" data-lines>
+        <span>Three ouds.</span>
+        <span><em>One signature.</em></span>
+      </h2>
       <div class="cards">
-        <article class="card reveal">
+        <article class="card" data-reveal>
           <span class="card-num">No. I</span>
-          <div class="card-art"><svg viewBox="0 0 120 190" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="60" cy="30" r="18"/><path d="M60 12 L74 26 L60 44 L46 26 Z M42 30 h36"/><path d="M54 48 v10 c0 4 -3 6 -3 10 v6 h18 v-6 c0 -4 -3 -6 -3 -10 v-10"/><path d="M51 74 c-14 8 -21 20 -21 38 v50 c0 12 12 22 30 22 s30 -10 30 -22 v-50 c0 -18 -7 -30 -21 -38"/><rect x="42" y="118" width="36" height="26" rx="2"/></g></svg></div>
+          <div class="card-art"><svg viewBox="0 0 120 190" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="60" cy="30" r="18"/><path d="M60 12 L74 26 L60 44 L46 26 Z M42 30 h36"/><path d="M54 48 v10 c0 4 -3 6 -3 10 v6 h18 v-6 c0 -4 -3 -6 -3 -10 v-10"/><path d="M51 74 c-14 8 -21 20 -21 38 v50 c0 12 12 22 30 22 s30 -10 30 -22 v-50 c0 -18 -7 -30 -21 -38"/><rect x="42" y="118" width="36" height="26" rx="2"/></g></svg></div>
           <h3>Oud Imp&eacute;rial</h3>
           <p class="card-notes">Vintage Hindi oud &middot; saffron &middot; smoked amber</p>
           <p class="card-copy">Twelve-year Assam oud, dense and regal, lifted by a thread of saffron light.</p>
           <div class="card-foot">Extrait de Parfum &mdash; by private consultation</div>
         </article>
-        <article class="card reveal">
+        <article class="card" data-reveal>
           <span class="card-num">No. II</span>
-          <div class="card-art"><svg viewBox="0 0 120 190" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="60" cy="30" r="18"/><path d="M60 12 L74 26 L60 44 L46 26 Z M42 30 h36"/><path d="M54 48 v10 c0 4 -3 6 -3 10 v6 h18 v-6 c0 -4 -3 -6 -3 -10 v-10"/><path d="M51 74 c-14 8 -21 20 -21 38 v50 c0 12 12 22 30 22 s30 -10 30 -22 v-50 c0 -18 -7 -30 -21 -38"/><rect x="42" y="118" width="36" height="26" rx="2"/></g></svg></div>
+          <div class="card-art"><svg viewBox="0 0 120 190" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="60" cy="30" r="18"/><path d="M60 12 L74 26 L60 44 L46 26 Z M42 30 h36"/><path d="M54 48 v10 c0 4 -3 6 -3 10 v6 h18 v-6 c0 -4 -3 -6 -3 -10 v-10"/><path d="M51 74 c-14 8 -21 20 -21 38 v50 c0 12 12 22 30 22 s30 -10 30 -22 v-50 c0 -18 -7 -30 -21 -38"/><rect x="42" y="118" width="36" height="26" rx="2"/></g></svg></div>
           <h3>Oud Ambr&eacute;</h3>
           <p class="card-notes">Cambodi oud &middot; grey amber &middot; Taif rose</p>
           <p class="card-copy">The desert at dusk &mdash; warm resin, sweet wind, a rose that refuses night.</p>
           <div class="card-foot">Extrait de Parfum &mdash; by private consultation</div>
         </article>
-        <article class="card reveal">
+        <article class="card" data-reveal>
           <span class="card-num">No. III</span>
-          <div class="card-art"><svg viewBox="0 0 120 190" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="60" cy="30" r="18"/><path d="M60 12 L74 26 L60 44 L46 26 Z M42 30 h36"/><path d="M54 48 v10 c0 4 -3 6 -3 10 v6 h18 v-6 c0 -4 -3 -6 -3 -10 v-10"/><path d="M51 74 c-14 8 -21 20 -21 38 v50 c0 12 12 22 30 22 s30 -10 30 -22 v-50 c0 -18 -7 -30 -21 -38"/><rect x="42" y="118" width="36" height="26" rx="2"/></g></svg></div>
+          <div class="card-art"><svg viewBox="0 0 120 190" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="60" cy="30" r="18"/><path d="M60 12 L74 26 L60 44 L46 26 Z M42 30 h36"/><path d="M54 48 v10 c0 4 -3 6 -3 10 v6 h18 v-6 c0 -4 -3 -6 -3 -10 v-10"/><path d="M51 74 c-14 8 -21 20 -21 38 v50 c0 12 12 22 30 22 s30 -10 30 -22 v-50 c0 -18 -7 -30 -21 -38"/><rect x="42" y="118" width="36" height="26" rx="2"/></g></svg></div>
           <h3>Oud Cristal</h3>
           <p class="card-notes">White oud &middot; iris &middot; cold incense</p>
           <p class="card-copy">Light through dark glass &mdash; a veil of iris over the palest oud we own.</p>
@@ -148,30 +174,49 @@
 
   <!-- ══════════════════ 04 · THE CORNER ══════════════════ -->
   <section class="section corner" id="corner">
-    <figure class="corner-media reveal">
-      <img id="corner-img" alt="The first BGS CORNER kiosk — Fashion Avenue, The Dubai Mall" loading="lazy">
-      <figcaption>Corner No. 001 &mdash; Fashion Avenue, The Dubai Mall</figcaption>
+    <figure class="corner-media" data-reveal>
+      <div class="corner-media-inner"><img id="corner-img" alt="The first BGS CORNER kiosk — Fashion Avenue, The Dubai Mall" loading="lazy"></div>
+      <figcaption>Corner No.&nbsp;001 &mdash; Fashion Avenue, The Dubai Mall</figcaption>
     </figure>
     <div class="wrap">
-      <p class="kicker num reveal"><b>04</b>The Corner</p>
-      <h2 class="display reveal">One hundred corners.<br><em>One house.</em></h2>
-      <div class="corner-grid">
-        <p class="lede reveal">A BGS CORNER is not a shop. It is a twelve-square-metre
+      <p class="kicker num" data-reveal><b>04</b>The Corner<i class="rule"></i></p>
+      <h2 class="display" data-lines>
+        <span>One hundred corners.</span>
+        <span><em>One house.</em></span>
+      </h2>
+      <div class="split">
+        <p class="lede" data-reveal>A BGS CORNER is not a shop. It is a twelve-square-metre
         jewel box of crystal, gold and oud, set like a stone into the world's finest
         addresses.</p>
-        <p class="body reveal">The first corner stands in The Dubai Mall. The vision is
-        one hundred &mdash; across the Gulf, then Europe and Asia &mdash; each one identical
-        in ritual, each one staffed by a ma&icirc;tre trained in the House, each one
-        pouring the same twelve-year oud. One house, poured one corner at a time.</p>
+        <p class="body" data-reveal>Every corner is identical in ritual &mdash; the same
+        crystal, the same gold leaf, the same twelve-year oud, poured by a ma&icirc;tre
+        trained inside the House. Small enough to place anywhere that matters. Precise
+        enough to feel like a maison.</p>
       </div>
-      <div class="stats reveal">
-        <div class="stat"><b>001</b><span>corner open &mdash; Dubai</span></div>
-        <div class="stat"><b>100</b><span>corners envisioned</span></div>
-        <div class="stat"><b>12<i>m&sup2;</i></b><span>of crystal &amp; gold, each</span></div>
+      <div class="stats" data-reveal>
+        <div class="stat"><b data-count="1" data-pad="3">001</b><span>corner open &mdash; Dubai</span></div>
+        <div class="stat"><b data-count="100">100</b><span>corners envisioned</span></div>
+        <div class="stat"><b data-count="12">12<i>m&sup2;</i></b><span>of crystal &amp; gold, each</span></div>
       </div>
-      <div class="partner reveal">
+
+      <ol class="roadmap">
+        <li data-reveal><b>I</b><h3>Duba&iuml;</h3><p>The first corner, and the House itself. Fashion Avenue, The Dubai Mall.</p></li>
+        <li data-reveal><b>II</b><h3>The Gulf</h3><p>Abu Dhabi, Riyadh, Doha, Kuwait &mdash; the great malls of the peninsula.</p></li>
+        <li data-reveal><b>III</b><h3>Europe</h3><p>London, Paris, Milan. Oud met with the vocabulary of haute parfumerie.</p></li>
+        <li data-reveal><b>IV</b><h3>Asia</h3><p>Singapore, Kuala Lumpur, Tokyo &mdash; where rare wood is already understood.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══════════════════ PARTNERSHIP ══════════════════ -->
+  <section class="partner-band" id="partner">
+    <div class="wrap">
+      <div class="partner" data-reveal>
+        <p class="kicker"><i></i>Partnership<i></i></p>
         <p class="partner-line">The House opens its corners with a small circle of partners.</p>
-        <a class="btn-gold" href="mailto:maison@bgscorner.com?subject=BGS%20CORNER%20%E2%80%94%20Partnership">Enquire about a corner</a>
+        <p class="partner-sub">Single corners and territory rights, for operators who understand
+        that patience is the product.</p>
+        <a class="btn-gold" href="mailto:maison@bgscorner.com?subject=BGS%20CORNER%20%E2%80%94%20Partnership%20Enquiry">Enquire about a corner</a>
       </div>
     </div>
   </section>
@@ -184,7 +229,7 @@
       </div>
       <div class="footer-col">
         <b>Visit</b>
-        <p>Corner No. 001<br>Fashion Avenue &middot; The Dubai Mall<br>Daily &middot; 10:00 &mdash; 00:00</p>
+        <p>Corner No.&nbsp;001<br>Fashion Avenue &middot; The Dubai Mall<br>Daily &middot; 10:00 &mdash; 00:00</p>
       </div>
       <div class="footer-col">
         <b>Write</b>

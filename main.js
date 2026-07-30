@@ -1,58 +1,79 @@
 /* ═══════════════════════════════════════════════════════════════
-   BGS CORNER — scroll-driven hero film
-   Frames are packed in a single binary file (assets/frames.bin):
-     magic "BGSP" | u32 version | u32 count | u32 w | u32 h |
-     u32 lengths[count] | concatenated WebP payloads
-   The loader streams the file, slices per-frame blobs as bytes
-   arrive, and a windowed decoder keeps ImageBitmaps ready around
-   the current scroll position so scrubbing never blocks.
+   BGS CORNER — scroll-driven hero film + reveal choreography
+
+   The film ships as a single binary pack per quality tier:
+     "BGSP" | u32 version | u32 count | u32 w | u32 h |
+     u32 lengths[count] | concatenated image payloads
+
+   The loader picks a tier from screen size, pixel density and the
+   network, streams the pack, and slices per-frame blobs as bytes
+   arrive so the first frame paints long before the download ends.
+   A decode window sized to a fixed memory budget keeps ImageBitmaps
+   ready around the playhead, so scrubbing never blocks the main
+   thread.
    ═══════════════════════════════════════════════════════════════ */
 
 (() => {
   "use strict";
 
-  const PACK_URL = "assets/frames.bin";
+  /* Quality tiers, best first. `min` is the required viewport width in
+     device pixels; AVIF tiers are skipped when the browser can't decode it. */
+  const TIERS = [
+    { url: "assets/film-uhd.avif.bin", mime: "image/avif", min: 1700, avif: true },
+    { url: "assets/film-hd.avif.bin",  mime: "image/avif", min: 0,    avif: true },
+    { url: "assets/film-sd.webp.bin",  mime: "image/webp", min: 0,    avif: false },
+  ];
+
   const DPR_CAP = 2;
-  const AHEAD = 22;          // frames decoded ahead of playhead
-  const BEHIND = 8;          // frames kept behind playhead
-  const MAX_DECODES = 3;     // concurrent decodes
+  const MAX_DECODES = 6;     // concurrent createImageBitmap calls
+  const AHEAD_RATIO = 0.72;  // share of the window that sits ahead of the playhead
+
+  /* Decoded bitmaps are the memory cost of smooth scrubbing: one 2560×1440
+     frame is ~14.7 MB as RGBA. Scale what we hold to the device. */
+  const MEM_BUDGET = (() => {
+    const gb = navigator.deviceMemory || 4;
+    return Math.min(200e6, Math.max(90e6, gb * 22e6));
+  })();
 
   const canvas = document.getElementById("film");
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { alpha: false });
   const hero = document.querySelector(".hero");
-  const loaderEl = document.getElementById("loader");
-  const loaderFill = document.getElementById("loader-fill");
-  const loaderPct = document.getElementById("loader-pct");
+  const curtain = document.getElementById("curtain");
+  const curtainFill = document.getElementById("curtain-fill");
+  const progressBar = document.getElementById("progress-bar");
   const cue = document.getElementById("cue");
   const nav = document.getElementById("nav");
-  const frame = document.getElementById("hero-frame");
+  const frameRule = document.getElementById("hero-frame");
+  const brand = document.querySelector(".brand");
   const copies = [
     document.getElementById("copy-1"),
     document.getElementById("copy-2"),
     document.getElementById("copy-3"),
   ];
 
-  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ── state ── */
   let frameW = 0, frameH = 0, count = 0;
-  let blobs = [];            // per-frame compressed blobs
-  let bitmaps = [];          // per-frame decoded ImageBitmap | null
-  let decoding = new Set();
-  let ready = false;         // first frame drawn
-  let pos = 0;               // smoothed playhead (float frame index)
-  let target = 0;            // scroll-derived target frame
-  let drawnIdx = -1;
-  let lastT = 0;
+  let blobs = [];      // compressed per-frame blobs
+  let bitmaps = [];    // decoded ImageBitmap | null
+  const decoding = new Set();
+  let ahead = 12, behind = 5;
+  let ready = false;
+  let pos = 0, target = 0, drawnIdx = -1, lastT = 0;
+  let pointerX = 0, pointerY = 0, pointerLerpX = 0, pointerLerpY = 0;
 
   /* ── canvas sizing ── */
   function resize() {
     const dpr = Math.min(devicePixelRatio || 1, DPR_CAP);
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
-      drawnIdx = -1; // force redraw
+    const w = Math.round(canvas.clientWidth * dpr);
+    const h = Math.round(canvas.clientHeight * dpr);
+    if (w && h && (canvas.width !== w || canvas.height !== h)) {
+      canvas.width = w;
+      canvas.height = h;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      drawnIdx = -1;
     }
   }
   addEventListener("resize", resize);
@@ -60,7 +81,7 @@
   /* ── draw one frame, cover-fit ── */
   function draw(idx) {
     const bmp = bitmaps[idx];
-    if (!bmp) return false;
+    if (!bmp || !canvas.width) return false;
     const cw = canvas.width, ch = canvas.height;
     const s = Math.max(cw / frameW, ch / frameH);
     const dw = frameW * s, dh = frameH * s;
@@ -69,9 +90,8 @@
     return true;
   }
 
-  /* nearest decoded frame at or below idx, else above */
   function nearestReady(idx) {
-    for (let d = 0; d < count; d++) {
+    for (let d = 1; d < count; d++) {
       if (idx - d >= 0 && bitmaps[idx - d]) return idx - d;
       if (idx + d < count && bitmaps[idx + d]) return idx + d;
     }
@@ -82,17 +102,18 @@
   function pump() {
     if (!count) return;
     const c = Math.round(pos);
-    // evict far-away bitmaps
+
     for (let i = 0; i < count; i++) {
-      if (bitmaps[i] && (i < c - BEHIND * 2 || i > c + AHEAD * 2)) {
+      if (bitmaps[i] && (i < c - behind || i > c + ahead)) {
         bitmaps[i].close();
         bitmaps[i] = null;
       }
     }
-    // decode the window, nearest-first
-    for (let d = 0; d <= AHEAD && decoding.size < MAX_DECODES; d++) {
-      for (const i of [c + d, c - d]) {
-        if (i < 0 || i >= count || d > (i < c ? BEHIND : AHEAD)) continue;
+
+    for (let d = 0; d <= ahead && decoding.size < MAX_DECODES; d++) {
+      for (const i of d === 0 ? [c] : [c + d, c - d]) {
+        if (i < 0 || i >= count) continue;
+        if (i < c && c - i > behind) continue;
         if (!blobs[i] || bitmaps[i] || decoding.has(i)) continue;
         decoding.add(i);
         createImageBitmap(blobs[i])
@@ -108,18 +129,17 @@
   }
 
   /* ── scroll mapping ── */
-  function measure() {
-    const rect = hero.getBoundingClientRect();
+  function heroProgress() {
     const total = hero.offsetHeight - innerHeight;
-    const scrolled = Math.min(Math.max(-rect.top, 0), total);
+    const scrolled = Math.min(Math.max(-hero.getBoundingClientRect().top, 0), total);
     return total > 0 ? scrolled / total : 0;
   }
 
-  /* hero copy phases: [fadeIn, fullIn, fullOut, fadeOut] in progress space */
+  /* hero copy phases in film-progress space: [in-start, in-end, out-start, out-end] */
   const PHASES = [
-    [-0.01, 0.00, 0.16, 0.26],
-    [0.30, 0.40, 0.52, 0.62],
-    [0.72, 0.82, 1.01, 1.02],
+    [-0.01, 0.00, 0.15, 0.25],
+    [0.31, 0.41, 0.53, 0.63],
+    [0.73, 0.83, 1.01, 1.02],
   ];
 
   function phaseAlpha(p, [a, b, c, d]) {
@@ -129,15 +149,24 @@
     return 1;
   }
 
-  function updateCopy(p) {
+  function updateHero(p) {
     for (let i = 0; i < copies.length; i++) {
       const a = phaseAlpha(p, PHASES[i]);
-      copies[i].style.opacity = a.toFixed(3);
-      copies[i].style.transform = `translateY(${((1 - a) * 26).toFixed(1)}px)`;
-      copies[i].style.visibility = a > 0.001 ? "visible" : "hidden";
+      const el = copies[i];
+      if (a <= 0.001) {
+        el.style.visibility = "hidden";
+        el.style.opacity = "0";
+        continue;
+      }
+      const rise = (1 - a) * 30;
+      const scale = 0.985 + a * 0.015;
+      el.style.visibility = "visible";
+      el.style.opacity = a.toFixed(3);
+      el.style.transform =
+        `translate3d(${(pointerLerpX * 9).toFixed(2)}px, ${(rise + pointerLerpY * 9).toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
     }
-    cue.style.opacity = p < 0.04 && ready ? 1 : 0;
-    frame.style.opacity = phaseAlpha(p, PHASES[0]).toFixed(3);
+    cue.style.opacity = p < 0.035 && ready ? "1" : "0";
+    frameRule.style.opacity = phaseAlpha(p, PHASES[0]).toFixed(3);
   }
 
   /* ── main loop ── */
@@ -150,14 +179,20 @@
     const dt = Math.min(Math.max((t - lastT) / 1000, 0) || 0.016, 0.05);
     lastT = t;
 
-    const p = measure();
+    const k = reduced ? 1 : 1 - Math.exp(-6.5 * dt);
+    pointerLerpX += (pointerX - pointerLerpX) * (reduced ? 1 : 1 - Math.exp(-4 * dt));
+    pointerLerpY += (pointerY - pointerLerpY) * (reduced ? 1 : 1 - Math.exp(-4 * dt));
+
+    const p = heroProgress();
     target = p * (count - 1 || 0);
-    updateCopy(p);
+    updateHero(p);
+
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - innerHeight;
+    progressBar.style.transform = `scaleX(${max > 0 ? (scrollY / max).toFixed(4) : 0})`;
 
     if (!ready) return;
 
-    // critically-damped-ish approach to target
-    const k = reducedMotion ? 1 : 1 - Math.exp(-9 * dt);
     pos += (target - pos) * k;
     if (Math.abs(target - pos) < 0.02) pos = target;
 
@@ -172,18 +207,65 @@
     }
   }
 
-  /* ── pack streaming loader ── */
+  /* ── tier selection ── */
+  /* A real 1×1 AVIF, encoded by the same toolchain that built the packs. */
+  const AVIF_PROBE_B64 =
+    "AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADrbWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAAAAAAAOcGl0bQAAAAAAAQAAAB5pbG9jAAAAAEQAAAEAAQAAAAEAAAETAAAAFwAAAChpaW5mAAAAAAABAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAABqaXBycAAAAEtpcGNvAAAAFGlzcGUAAAAAAAAAAQAAAAEAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBAAwAAAAAE2NvbHJuY2x4AAEADQAGgAAAABdpcG1hAAAAAAAAAAEAAQQBAoMEAAAAH21kYXQSAAoFGAAGBCAyDBmAEEEEBAAAsBNR4A==";
+
+  /* Probe with createImageBitmap — the same call the film decodes through.
+     HTMLImageElement.decode() is unreliable here: it can hang indefinitely
+     while the document is hidden, which would stall the film in a background
+     tab. The timeout is a last resort so loading can never block on this. */
+  async function avifSupported() {
+    try {
+      const bin = atob(AVIF_PROBE_B64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const blob = new Blob([bytes], { type: "image/avif" });
+      const bmp = await Promise.race([
+        createImageBitmap(blob),
+        new Promise((_, rej) => setTimeout(() => rej(new Error("probe timeout")), 2500)),
+      ]);
+      const ok = bmp.width > 0;
+      bmp.close();
+      return ok;
+    } catch { return false; }
+  }
+
+  async function pickTier() {
+    const avif = await avifSupported();
+    const conn = navigator.connection || {};
+    const slow = conn.saveData === true ||
+                 /^(slow-)?2g$/.test(conn.effectiveType || "") ||
+                 conn.effectiveType === "3g";
+    // Judge the display, not the current window: a narrow window on a large
+    // retina screen still deserves the high tier, and some embedders report a
+    // zero-width viewport before first paint.
+    const cssPx = Math.max(
+      innerWidth || 0,
+      document.documentElement.clientWidth || 0,
+      (screen && screen.width) || 0
+    );
+    const devicePx = cssPx * Math.min(devicePixelRatio || 1, DPR_CAP);
+    for (const t of TIERS) {
+      if (t.avif && !avif) continue;
+      if (t.min && (slow || devicePx < t.min)) continue;
+      return t;
+    }
+    return TIERS[TIERS.length - 1];
+  }
+
+  /* ── streaming pack loader ── */
   async function load() {
-    const res = await fetch(PACK_URL);
-    if (!res.ok) throw new Error(`frames.bin: HTTP ${res.status}`);
+    const tier = await pickTier();
+    const res = await fetch(tier.url);
+    if (!res.ok) throw new Error(`${tier.url}: HTTP ${res.status}`);
     const totalBytes = +res.headers.get("Content-Length") || 0;
 
     let received = 0;
-    let header = null;   // {n, offsets[]}
-    let buf = new Uint8Array(totalBytes || 1 << 20);
+    let header = null;
+    let buf = new Uint8Array(totalBytes || 1 << 21);
     let nextFrame = 0;
-
-    const reader = res.body.getReader();
 
     const append = (chunk) => {
       if (received + chunk.length > buf.length) {
@@ -195,10 +277,10 @@
       received += chunk.length;
     };
 
-    const tryParseHeader = () => {
+    const tryHeader = () => {
       if (received < 20) return;
       const dv = new DataView(buf.buffer);
-      if (dv.getUint32(0) !== 0x42475350) throw new Error("bad magic"); // "BGSP"
+      if (dv.getUint32(0) !== 0x42475350) throw new Error("bad pack magic");
       const n = dv.getUint32(8, true);
       if (received < 20 + n * 4) return;
       frameW = dv.getUint32(12, true);
@@ -209,84 +291,182 @@
       count = n;
       blobs = new Array(n).fill(null);
       bitmaps = new Array(n).fill(null);
+
+      // size the decode window to the memory budget for this tier
+      const perFrame = frameW * frameH * 4;
+      const slots = Math.max(6, Math.min(48, Math.floor(MEM_BUDGET / perFrame)));
+      ahead = Math.max(4, Math.round(slots * AHEAD_RATIO));
+      behind = Math.max(2, slots - ahead);
     };
 
-    const sliceReadyFrames = () => {
+    const sliceReady = () => {
       if (!header) return;
       while (nextFrame < header.n && received >= header.offsets[nextFrame + 1]) {
         blobs[nextFrame] = new Blob(
           [buf.subarray(header.offsets[nextFrame], header.offsets[nextFrame + 1])],
-          { type: "image/webp" }
+          { type: tier.mime }
         );
         nextFrame++;
       }
     };
 
+    const reader = res.body.getReader();
     for (;;) {
       const { done, value } = await reader.read();
       if (done) break;
       append(value);
-      if (!header) tryParseHeader();
-      sliceReadyFrames();
+      if (!header) tryHeader();
+      sliceReady();
 
       if (totalBytes) {
-        const pct = Math.round((received / totalBytes) * 100);
-        loaderFill.style.width = pct + "%";
-        loaderPct.textContent = pct + "%";
+        curtainFill.style.transform = `scaleX(${(received / totalBytes).toFixed(4)})`;
       }
 
-      // first paint as soon as frame 0 exists
       if (!ready && blobs[0]) {
         ready = true;
         resize();
-        createImageBitmap(blobs[0]).then((bmp) => {
-          bitmaps[0] = bmp;
-          if (drawnIdx < 0) draw(0);
-          loaderEl.classList.add("done");
-        });
+        const bmp = await createImageBitmap(blobs[0]);
+        bitmaps[0] = bmp;
+        if (drawnIdx < 0) draw(0);
+        openCurtain();
       }
     }
 
-    sliceReadyFrames();
-    loaderFill.style.width = "100%";
-    loaderEl.classList.add("done");
+    sliceReady();
+    curtainFill.style.transform = "scaleX(1)";
     pump();
 
-    // hand the corner section a still of the final frame — no extra
-    // image files needed in the repo
+    // the corner section reuses the film's closing frame — no extra image
+    // file ships in the repo
     const img = document.getElementById("corner-img");
     if (img && blobs[count - 1]) img.src = URL.createObjectURL(blobs[count - 1]);
+
+    return { tier: tier.url, count, frameW, frameH, ahead, behind };
   }
 
-  /* ── nav + reveals ── */
-  addEventListener("scroll", () => {
-    nav.classList.toggle("solid", scrollY > innerHeight * 0.6);
-  }, { passive: true });
+  let curtainOpened = false;
+  function openCurtain() {
+    if (curtainOpened) return;
+    curtainOpened = true;
+    setTimeout(() => {
+      curtain.classList.add("lift");
+      if (brand) brand.classList.add("lit");
+    }, reduced ? 0 : 480);
+  }
 
+  /* ── wordmark letter stagger ── */
+  if (brand && !reduced) {
+    for (const node of [...brand.childNodes]) {
+      if (node.nodeType !== Node.TEXT_NODE) continue;
+      const frag = document.createDocumentFragment();
+      for (const chn of node.textContent) {
+        const s = document.createElement("span");
+        s.className = "ch";
+        s.textContent = chn;
+        frag.appendChild(s);
+      }
+      node.replaceWith(frag);
+    }
+    brand.querySelectorAll(".ch").forEach((s, i) => {
+      s.style.transitionDelay = (i * 0.055).toFixed(3) + "s";
+    });
+  } else if (brand) {
+    brand.classList.add("lit");
+  }
+
+  /* ── masked line reveals: wrap each line's contents in an inner span ── */
+  document.querySelectorAll("[data-lines] > span").forEach((line) => {
+    const inner = document.createElement("span");
+    while (line.firstChild) inner.appendChild(line.firstChild);
+    line.appendChild(inner);
+  });
+
+  /* ── stat counters ── */
+  function runCounter(el) {
+    const to = +el.dataset.count;
+    const pad = +(el.dataset.pad || 0);
+    const suffix = el.querySelector("i");
+    const suffixHTML = suffix ? suffix.outerHTML : "";
+    if (reduced || !Number.isFinite(to)) return;
+    const dur = 1500;
+    const t0 = performance.now();
+    const write = (v) => {
+      const s = pad ? String(v).padStart(pad, "0") : String(v);
+      el.innerHTML = s + suffixHTML;
+    };
+    const frame = (t) => {
+      const raw = Math.min((t - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - raw, 3);
+      write(Math.round(to * eased));
+      if (raw < 1) requestAnimationFrame(frame);
+    };
+    write(0);
+    requestAnimationFrame(frame);
+  }
+
+  /* ── reveal observer ── */
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
-      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      if (!e.isIntersecting) continue;
+      e.target.classList.add("in");
+      e.target.querySelectorAll?.("[data-count]").forEach(runCounter);
+      io.unobserve(e.target);
     }
-  }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+
+  document.querySelectorAll("[data-reveal], [data-lines]").forEach((el) => io.observe(el));
+
+  /* ── nav state + image parallax ── */
+  addEventListener("scroll", () => {
+    nav.classList.toggle("solid", scrollY > innerHeight * 0.55);
+  }, { passive: true });
+
+  const parallaxImg = document.querySelector(".corner-media img");
+  if (parallaxImg && !reduced) {
+    const pio = new IntersectionObserver((entries) => {
+      for (const e of entries) parallaxImg.dataset.vis = e.isIntersecting ? "1" : "";
+    });
+    pio.observe(parallaxImg);
+    addEventListener("scroll", () => {
+      if (!parallaxImg.dataset.vis) return;
+      const r = parallaxImg.getBoundingClientRect();
+      const mid = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+      parallaxImg.style.transform =
+        `translate3d(0, ${(-mid * 34).toFixed(2)}px, 0) scale(1.09)`;
+    }, { passive: true });
+  }
+
+  /* ── pointer parallax on hero copy ── */
+  if (!reduced && matchMedia("(pointer: fine)").matches) {
+    addEventListener("pointermove", (e) => {
+      pointerX = (e.clientX / innerWidth - 0.5) * 2;
+      pointerY = (e.clientY / innerHeight - 0.5) * 2;
+    }, { passive: true });
+  }
 
   /* ── go ── */
   resize();
-  updateCopy(0);
+  updateHero(0);
   requestAnimationFrame(tick);
 
-  // dev/test hook: lets tooling drive the loop when rAF is throttled
+  // safety: never leave the curtain up if the network stalls badly
+  setTimeout(openCurtain, 9000);
+
+  load()
+    .then((info) => console.info("[BGS CORNER] film ready", info))
+    .catch((err) => {
+      console.error(err);
+      openCurtain();
+    });
+
+  // dev hook: lets tooling drive the loop when rAF is throttled
   window.__bgs = {
     info: () => ({
-      count, ready,
+      count, ready, frameW, frameH, ahead, behind,
       pos: +pos.toFixed(2), target: +target.toFixed(2), drawnIdx,
       buffered: blobs.filter(Boolean).length,
       decoded: bitmaps.filter(Boolean).length,
     }),
     step: (t) => step(t),
   };
-  load().catch((err) => {
-    console.error(err);
-    loaderPct.textContent = "The film could not be loaded.";
-  });
 })();
