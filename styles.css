@@ -714,7 +714,82 @@ em { font-style: italic; }
   color: var(--cream-dim);
 }
 
-/* ── 04 · The Corner ────────────────────────────────────────── */
+/* ── 04 · The Objects ───────────────────────────────────────── */
+/* Deliberately quieter than the oud cards: oud stays the signature. */
+
+.objects { background: var(--ink); }
+
+.objects-intro { margin-bottom: clamp(2.8rem, 6vw, 4.4rem); }
+
+.objects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+@media (max-width: 900px) { .objects-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .objects-grid { grid-template-columns: 1fr; } }
+
+.object {
+  border-top: 1px solid var(--gold-line);
+  padding-top: 2rem;
+}
+
+.object:nth-child(2) { transition-delay: .1s; }
+.object:nth-child(3) { transition-delay: .2s; }
+
+.object-art {
+  color: var(--gold);
+  opacity: .78;
+  margin-bottom: 1.6rem;
+  transition: transform .8s var(--ease), opacity .6s var(--ease-soft);
+}
+
+.object-art svg { width: 62px; height: 62px; display: block; }
+
+.object:hover .object-art { transform: translateY(-4px); opacity: 1; }
+
+.object-tag {
+  display: block;
+  font-size: .58rem;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: .7rem;
+}
+
+.object h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.55rem;
+  letter-spacing: .02em;
+  margin-bottom: .7rem;
+}
+
+.object p { color: var(--cream-dim); font-size: .92rem; }
+
+.objects-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  font-size: .62rem;
+  letter-spacing: .34em;
+  text-indent: .34em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  text-align: center;
+}
+
+.objects-note i {
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: var(--gold-line);
+}
+
+/* ── 05 · The Corner ────────────────────────────────────────── */
 
 .corner { background: var(--ink); padding-top: 0; }
 
