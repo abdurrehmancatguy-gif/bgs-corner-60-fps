@@ -15,7 +15,7 @@
        visitor. Bump this when the CSS or JS changes. It is deliberately
        independent of FILM_VERSION in main.js — the film packs are ~15 MB, so
        they should only be re-versioned when the frames themselves change. -->
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 
@@ -102,11 +102,16 @@
     <div class="medallion draw" aria-hidden="true">
       <svg viewBox="0 0 220 220">
         <g fill="none" stroke="currentColor" stroke-width="0.9">
-          <circle cx="110" cy="110" r="101" class="stroke" pathLength="1"/>
+          <!-- Khatam from two squares of half-side a = 68, centred (110,110).
+               Every radius is derived from a, none eyeballed:
+                 circumcircle  r = a·√2     = 96.1665  through the 8 tips
+                 incircle      r = a        = 68       tangent to the 8 edges
+                 core          r = a·(√2−1) = 28.1665  silver ratio -->
+          <circle cx="110" cy="110" r="96.1665" class="stroke" pathLength="1"/>
           <rect x="42" y="42" width="136" height="136" class="stroke" pathLength="1"/>
           <rect x="42" y="42" width="136" height="136" class="stroke" pathLength="1" transform="rotate(45 110 110)"/>
-          <circle cx="110" cy="110" r="70" class="stroke" pathLength="1"/>
-          <circle cx="110" cy="110" r="27" class="stroke" pathLength="1"/>
+          <circle cx="110" cy="110" r="68" class="stroke" pathLength="1"/>
+          <circle cx="110" cy="110" r="28.1665" class="stroke" pathLength="1"/>
         </g>
       </svg>
     </div>
@@ -304,6 +309,6 @@
     <span class="footer-fine">&copy; 2026 BGS CORNER &mdash; Maison de l'Oud. One house, one hundred corners.</span>
   </footer>
 
-  <script src="main.js?v=8"></script>
+  <script src="main.js?v=9"></script>
 </body>
 </html>
