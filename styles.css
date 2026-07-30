@@ -211,6 +211,10 @@ em { font-style: italic; }
 
 .hero-copy .btn-gold { pointer-events: auto; }
 
+/* the headline carries its own parallax layer on top of the block's */
+.hero-copy .brand,
+.hero-copy .line { will-change: transform; }
+
 /* kicker — small caps between hairlines */
 
 .kicker {

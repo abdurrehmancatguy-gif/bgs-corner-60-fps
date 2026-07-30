@@ -59,6 +59,17 @@
     document.getElementById("copy-3"),
   ];
 
+  /* Hero parallax. The headline rides further than the small type, so the
+     block reads as layered depth rather than one flat plane sliding. */
+  const POINTER_BLOCK = 17;   // px the whole copy block travels with the pointer
+  const POINTER_LEAD = 12;    // extra px for the headline itself
+  const RISE = 54;            // px the copy rises as it fades in
+
+  const heroLayers = copies.map((el) => ({
+    el,
+    lead: el.querySelector(".brand, .line"),
+  }));
+
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ── state ── */
@@ -158,20 +169,27 @@
   }
 
   function updateHero(p) {
-    for (let i = 0; i < copies.length; i++) {
+    for (let i = 0; i < heroLayers.length; i++) {
       const a = phaseAlpha(p, PHASES[i]);
-      const el = copies[i];
+      const { el, lead } = heroLayers[i];
       if (a <= 0.001) {
         el.style.visibility = "hidden";
         el.style.opacity = "0";
         continue;
       }
-      const rise = (1 - a) * 30;
-      const scale = 0.985 + a * 0.015;
+      const rise = (1 - a) * RISE;
+      const scale = 0.965 + a * 0.035;
       el.style.visibility = "visible";
       el.style.opacity = a.toFixed(3);
       el.style.transform =
-        `translate3d(${(pointerLerpX * 9).toFixed(2)}px, ${(rise + pointerLerpY * 9).toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+        `translate3d(${(pointerLerpX * POINTER_BLOCK).toFixed(2)}px, ` +
+        `${(rise + pointerLerpY * POINTER_BLOCK).toFixed(2)}px, 0) ` +
+        `scale(${scale.toFixed(4)})`;
+      if (lead) {
+        lead.style.transform =
+          `translate3d(${(pointerLerpX * POINTER_LEAD).toFixed(2)}px, ` +
+          `${(pointerLerpY * POINTER_LEAD).toFixed(2)}px, 0)`;
+      }
     }
     cue.style.opacity = p < 0.035 && ready ? "1" : "0";
     frameRule.style.opacity = phaseAlpha(p, PHASES[0]).toFixed(3);
