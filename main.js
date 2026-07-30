@@ -16,10 +16,12 @@
 (() => {
   "use strict";
 
-  /* Bump whenever assets/film-*.bin are rebuilt. The packs are large and are
+  /* Bump ONLY when assets/film-*.bin are rebuilt. The packs are large and are
      served without cache headers by most static hosts, so browsers will happily
      reuse a stale copy for a long time; versioning the URL makes a rebuild
-     reach visitors who already have the old film cached. */
+     reach visitors who already have the old film cached. Changing this forces a
+     multi-megabyte re-download, so it is independent of the ?v= on the script
+     and stylesheet in index.html — bump that one for code changes. */
   const FILM_VERSION = "3";
 
   /* Quality tiers, best first. `min` is the required viewport width in
@@ -241,9 +243,12 @@
   async function pickTier() {
     const avif = await avifSupported();
     const conn = navigator.connection || {};
+    // Only genuinely constrained connections drop the top tier. "3g" is
+    // reported liberally — often on connections that carry the 2K film
+    // perfectly well — so a large screen keeps full quality, and only an
+    // explicit data-saving preference or a 2g class downgrades it.
     const slow = conn.saveData === true ||
-                 /^(slow-)?2g$/.test(conn.effectiveType || "") ||
-                 conn.effectiveType === "3g";
+                 /^(slow-)?2g$/.test(conn.effectiveType || "");
     // Judge the display, not the current window: a narrow window on a large
     // retina screen still deserves the high tier, and some embedders report a
     // zero-width viewport before first paint.
