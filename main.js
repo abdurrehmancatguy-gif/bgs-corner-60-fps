@@ -425,7 +425,9 @@
     }
   }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
 
-  document.querySelectorAll("[data-reveal], [data-lines]").forEach((el) => io.observe(el));
+  document
+    .querySelectorAll("[data-reveal], [data-lines], .tex, .draw")
+    .forEach((el) => io.observe(el));
 
   /* ── nav state + image parallax ── */
   addEventListener("scroll", () => {

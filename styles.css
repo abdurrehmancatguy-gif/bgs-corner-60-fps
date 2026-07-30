@@ -496,6 +496,83 @@ em { font-style: italic; }
 
 @media (max-width: 820px) { .split { grid-template-columns: 1fr; } }
 
+/* ── Royal ground: khatam (8-point star) lattice ────────────────
+   An Islamic star tessellation in gold hairline, kept near-invisible so it
+   reads as texture rather than pattern. Masked away at the top and bottom
+   of each band so the tiling never ends on a hard seam. */
+
+/* overflow is load-bearing: the ground scales in from 1.05, which would
+   otherwise push the page into horizontal scroll before it reveals */
+.tex { position: relative; isolation: isolate; overflow: hidden; }
+
+.tex::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23c9a35a' stroke-width='1'%3E%3Crect x='34' y='34' width='52' height='52'/%3E%3Crect x='34' y='34' width='52' height='52' transform='rotate(45 60 60)'/%3E%3Crect x='-26' y='-26' width='52' height='52'/%3E%3Crect x='-26' y='-26' width='52' height='52' transform='rotate(45 0 0)'/%3E%3Crect x='94' y='-26' width='52' height='52'/%3E%3Crect x='94' y='-26' width='52' height='52' transform='rotate(45 120 0)'/%3E%3Crect x='-26' y='94' width='52' height='52'/%3E%3Crect x='-26' y='94' width='52' height='52' transform='rotate(45 0 120)'/%3E%3Crect x='94' y='94' width='52' height='52'/%3E%3Crect x='94' y='94' width='52' height='52' transform='rotate(45 120 120)'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: clamp(96px, 9vw, 132px) auto;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 2s var(--ease), transform 2.6s var(--ease);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+}
+
+.tex.in::before { opacity: var(--tex, .05); transform: none; }
+
+/* ── Drawn ornaments ────────────────────────────────────────────
+   Every stroke carries pathLength="1", so a single dash rule draws any
+   shape correctly regardless of its real geometry. */
+
+.draw .stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition: stroke-dashoffset 2.2s var(--ease), opacity 1.2s var(--ease);
+}
+
+.draw.in .stroke { stroke-dashoffset: 0; opacity: 1; }
+.draw.in .stroke:nth-child(2) { transition-delay: .16s; }
+.draw.in .stroke:nth-child(3) { transition-delay: .32s; }
+.draw.in .stroke:nth-child(4) { transition-delay: .48s; }
+.draw.in .stroke:nth-child(5) { transition-delay: .64s; }
+
+/* medallion behind the manifesto pull-quote */
+
+.medallion {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  width: clamp(320px, 50vw, 620px);
+  aspect-ratio: 1;
+  color: var(--gold);
+  opacity: .2;                 /* a whisper behind the quote, not a badge */
+  pointer-events: none;
+}
+
+.medallion svg { width: 100%; height: 100%; display: block; }
+
+/* star cartouche sitting on the partnership frame */
+
+.seal {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% -50%;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: var(--gold);
+}
+
+.seal svg { width: 26px; height: 26px; display: block; }
+
 /* generic reveal */
 
 [data-reveal] {
@@ -545,7 +622,9 @@ em { font-style: italic; }
 /* ── Manifesto band ─────────────────────────────────────────── */
 
 .manifesto {
+  --tex: .065;                 /* feature band carries the ground a touch stronger */
   padding: clamp(5rem, 12vw, 10rem) 0;
+  overflow: hidden;
   background: var(--ink-2);
   border-block: 1px solid var(--gold-line);
   text-align: center;
@@ -900,6 +979,7 @@ em { font-style: italic; }
 .partner-band { padding: 0 0 clamp(6rem, 12vw, 10rem); background: var(--ink); }
 
 .partner {
+  position: relative;
   border: 1px solid var(--gold-line);
   padding: clamp(2.8rem, 6vw, 5rem) clamp(1.8rem, 5vw, 4rem);
   text-align: center;
@@ -984,5 +1064,7 @@ em { font-style: italic; }
   }
   .kicker.num .rule { transform: scaleX(1); transition: none; }
   .scroll-cue i::after { animation: none; }
+  .tex::before { opacity: var(--tex, .05); transform: none; transition: none; }
+  .draw .stroke { stroke-dashoffset: 0; opacity: 1; transition: none; }
   .curtain-mark, .curtain-sub { animation: none; opacity: 1; }
 }

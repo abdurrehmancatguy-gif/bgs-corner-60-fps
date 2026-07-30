@@ -15,7 +15,7 @@
        visitor. Bump this when the CSS or JS changes. It is deliberately
        independent of FILM_VERSION in main.js — the film packs are ~15 MB, so
        they should only be re-versioned when the frames themselves change. -->
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
 
@@ -73,7 +73,7 @@
   </section>
 
   <!-- ══════════════════ 01 · THE HOUSE ══════════════════ -->
-  <section class="section house" id="house">
+  <section class="section house tex" id="house">
     <div class="wrap">
       <p class="kicker num" data-reveal><b>01</b>The House<i class="rule"></i></p>
       <h2 class="display" data-lines>
@@ -98,7 +98,18 @@
   </section>
 
   <!-- ══════════════════ MANIFESTO BAND ══════════════════ -->
-  <section class="manifesto">
+  <section class="manifesto tex">
+    <div class="medallion draw" aria-hidden="true">
+      <svg viewBox="0 0 220 220">
+        <g fill="none" stroke="currentColor" stroke-width="0.9">
+          <circle cx="110" cy="110" r="101" class="stroke" pathLength="1"/>
+          <rect x="42" y="42" width="136" height="136" class="stroke" pathLength="1"/>
+          <rect x="42" y="42" width="136" height="136" class="stroke" pathLength="1" transform="rotate(45 110 110)"/>
+          <circle cx="110" cy="110" r="70" class="stroke" pathLength="1"/>
+          <circle cx="110" cy="110" r="27" class="stroke" pathLength="1"/>
+        </g>
+      </svg>
+    </div>
     <div class="wrap">
       <blockquote data-lines>
         <span><em>&ldquo;A great oud is not blended.</em></span>
@@ -109,7 +120,7 @@
   </section>
 
   <!-- ══════════════════ 02 · THE OUD ══════════════════ -->
-  <section class="section oud" id="oud">
+  <section class="section oud tex" id="oud">
     <div class="wrap">
       <p class="kicker num" data-reveal><b>02</b>The Oud<i class="rule"></i></p>
       <h2 class="display" data-lines>
@@ -142,7 +153,7 @@
   </section>
 
   <!-- ══════════════════ 03 · COLLECTION ══════════════════ -->
-  <section class="section collection" id="collection">
+  <section class="section collection tex" id="collection">
     <div class="wrap">
       <p class="kicker num" data-reveal><b>03</b>The Collection<i class="rule"></i></p>
       <h2 class="display" data-lines>
@@ -179,7 +190,7 @@
   </section>
 
   <!-- ══════════════════ 04 · THE OBJECTS ══════════════════ -->
-  <section class="section objects" id="objects">
+  <section class="section objects tex" id="objects">
     <div class="wrap">
       <p class="kicker num" data-reveal><b>04</b>The Objects<i class="rule"></i></p>
       <h2 class="display" data-lines>
@@ -218,7 +229,7 @@
   </section>
 
   <!-- ══════════════════ 05 · THE CORNER ══════════════════ -->
-  <section class="section corner" id="corner">
+  <section class="section corner tex" id="corner">
     <figure class="corner-media" data-reveal>
       <div class="corner-media-inner"><img id="corner-img" alt="The first BGS CORNER kiosk — Pearl Executive Hotel, Dubai" loading="lazy"></div>
       <figcaption>Corner No.&nbsp;001 &mdash; Pearl Executive Hotel, Duba&iuml;</figcaption>
@@ -255,9 +266,17 @@
   </section>
 
   <!-- ══════════════════ PARTNERSHIP ══════════════════ -->
-  <section class="partner-band" id="partner">
+  <section class="partner-band tex" id="partner">
     <div class="wrap">
       <div class="partner" data-reveal>
+        <span class="seal draw" aria-hidden="true">
+          <svg viewBox="0 0 40 40">
+            <g fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="9.5" y="9.5" width="21" height="21" class="stroke" pathLength="1"/>
+              <rect x="9.5" y="9.5" width="21" height="21" class="stroke" pathLength="1" transform="rotate(45 20 20)"/>
+            </g>
+          </svg>
+        </span>
         <p class="kicker"><i></i>Partnership<i></i></p>
         <p class="partner-line">The House opens its corners with a small circle of partners.</p>
         <p class="partner-sub">Single corners and territory rights, for operators who understand
@@ -285,6 +304,6 @@
     <span class="footer-fine">&copy; 2026 BGS CORNER &mdash; Maison de l'Oud. One house, one hundred corners.</span>
   </footer>
 
-  <script src="main.js?v=4"></script>
+  <script src="main.js?v=8"></script>
 </body>
 </html>
