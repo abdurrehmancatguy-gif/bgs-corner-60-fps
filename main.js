@@ -16,6 +16,12 @@
 (() => {
   "use strict";
 
+  /* Bump whenever assets/film-*.bin are rebuilt. The packs are large and are
+     served without cache headers by most static hosts, so browsers will happily
+     reuse a stale copy for a long time; versioning the URL makes a rebuild
+     reach visitors who already have the old film cached. */
+  const FILM_VERSION = "2-deep-oud";
+
   /* Quality tiers, best first. `min` is the required viewport width in
      device pixels; AVIF tiers are skipped when the browser can't decode it. */
   const TIERS = [
@@ -258,7 +264,7 @@
   /* ── streaming pack loader ── */
   async function load() {
     const tier = await pickTier();
-    const res = await fetch(tier.url);
+    const res = await fetch(`${tier.url}?v=${FILM_VERSION}`);
     if (!res.ok) throw new Error(`${tier.url}: HTTP ${res.status}`);
     const totalBytes = +res.headers.get("Content-Length") || 0;
 
