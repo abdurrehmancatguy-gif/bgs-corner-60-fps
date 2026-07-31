@@ -18,6 +18,7 @@
   /* inset of the hero's gold frame — the nav clears it from the same value,
      so the rule can never cut through the navigation at any viewport width */
   --frame-inset: clamp(14px, 2.4vw, 30px);
+  --tile: clamp(96px, 9vw, 132px);   /* khatam ground tile */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -512,7 +513,11 @@ em { font-style: italic; }
 
 /* overflow is load-bearing: the ground scales in from 1.05, which would
    otherwise push the page into horizontal scroll before it reveals */
-.tex { position: relative; isolation: isolate; overflow: hidden; }
+/* No overflow clipping here: ornaments (the partnership seal) deliberately
+   sit half outside their box, and clipping the band would cut them. The
+   ground settles via background-size instead of a transform, so it can
+   never overflow the element in the first place. */
+.tex { position: relative; isolation: isolate; }
 
 .tex::before {
   content: "";
@@ -521,15 +526,14 @@ em { font-style: italic; }
   z-index: -1;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23c9a35a' stroke-width='1'%3E%3Crect x='34' y='34' width='52' height='52'/%3E%3Crect x='34' y='34' width='52' height='52' transform='rotate(45 60 60)'/%3E%3Crect x='-26' y='-26' width='52' height='52'/%3E%3Crect x='-26' y='-26' width='52' height='52' transform='rotate(45 0 0)'/%3E%3Crect x='94' y='-26' width='52' height='52'/%3E%3Crect x='94' y='-26' width='52' height='52' transform='rotate(45 120 0)'/%3E%3Crect x='-26' y='94' width='52' height='52'/%3E%3Crect x='-26' y='94' width='52' height='52' transform='rotate(45 0 120)'/%3E%3Crect x='94' y='94' width='52' height='52'/%3E%3Crect x='94' y='94' width='52' height='52' transform='rotate(45 120 120)'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: clamp(96px, 9vw, 132px) auto;
+  background-size: calc(var(--tile) * 1.08) auto;
   opacity: 0;
-  transform: scale(1.05);
-  transition: opacity 2s var(--ease), transform 2.6s var(--ease);
+  transition: opacity 2s var(--ease), background-size 2.6s var(--ease);
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
           mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
 }
 
-.tex.in::before { opacity: var(--tex, .05); transform: none; }
+.tex.in::before { opacity: var(--tex, .05); background-size: var(--tile) auto; }
 
 /* ── Drawn ornaments ────────────────────────────────────────────
    Every stroke carries pathLength="1", so a single dash rule draws any
@@ -985,7 +989,8 @@ em { font-style: italic; }
 
 /* ── Partnership band ───────────────────────────────────────── */
 
-.partner-band { padding: 0 0 clamp(6rem, 12vw, 10rem); background: var(--ink); }
+/* top padding gives the seal air to sit proud of the frame */
+.partner-band { padding: clamp(2.2rem, 5vw, 3.6rem) 0 clamp(6rem, 12vw, 10rem); background: var(--ink); }
 
 .partner {
   position: relative;
@@ -1073,7 +1078,7 @@ em { font-style: italic; }
   }
   .kicker.num .rule { transform: scaleX(1); transition: none; }
   .scroll-cue i::after { animation: none; }
-  .tex::before { opacity: var(--tex, .05); transform: none; transition: none; }
+  .tex::before { opacity: var(--tex, .05); background-size: var(--tile) auto; transition: none; }
   .draw .stroke { stroke-dashoffset: 0; opacity: 1; transition: none; }
   .curtain-mark, .curtain-sub { animation: none; opacity: 1; }
 }
