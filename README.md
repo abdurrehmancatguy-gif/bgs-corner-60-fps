@@ -5,10 +5,11 @@ perfume franchise with a vision of one hundred kiosk "corners" in the world's
 finest addresses. The hero scrubs a 300-frame product film (crystal flacon →
 kiosk reveal) on a full-screen canvas as you scroll.
 
-Oud is the signature and leads the site. A fourth section, **The Objects**,
-holds the wider kiosk range — porcelain, calfskin and writing instruments —
-styled deliberately quieter than the oud collection so the perfume stays
-dominant, and marked as arriving through 2026.
+Oud is the signature and the site carries nothing else: four sections —
+The House, The Oud, The Collection and The Corner. The wider kiosk range
+(porcelain, calfskin, writing instruments) was drafted and then cut, since
+those objects are not yet real; the markup for it is in the history if it
+is wanted back.
 
 ## The hero film
 
