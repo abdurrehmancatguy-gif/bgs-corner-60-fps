@@ -6,7 +6,9 @@
   <title>BGS CORNER — The House of Oud</title>
   <meta name="description" content="BGS CORNER — the house of oud. Vintage ouds in crystal-cut flacons, poured one corner at a time. Dubai, and one hundred corners to come.">
   <meta name="theme-color" content="#0b0906">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0906'/%3E%3Cpath d='M32 10 L50 32 L32 54 L14 32 Z' fill='none' stroke='%23c9a35a' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=20">
+  <link rel="icon" type="image/png" sizes="180x180" href="assets/favicon-180.png?v=20">
+  <link rel="apple-touch-icon" href="assets/favicon-180.png?v=20">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -15,21 +17,21 @@
        visitor. Bump this when the CSS or JS changes. It is deliberately
        independent of FILM_VERSION in main.js — the film packs are ~15 MB, so
        they should only be re-versioned when the frames themselves change. -->
-  <link rel="stylesheet" href="styles.css?v=17">
+  <link rel="stylesheet" href="styles.css?v=27">
 </head>
 <body>
 
   <div class="progress" aria-hidden="true"><b id="progress-bar"></b></div>
 
   <header class="nav" id="nav">
-    <a class="nav-brand" href="#top">BGS&nbsp;CORNER</a>
+    <a class="nav-brand" href="#top"><img class="nav-mark" src="assets/bgs-mark.png?v=20" alt="" width="128" height="128">BGS&nbsp;CORNER</a>
     <nav class="nav-links">
       <a href="#house">The House</a>
       <a href="#oud">The Oud</a>
       <a href="#collection">Collection</a>
       <a href="#corner">The Corner</a>
     </nav>
-    <a class="nav-cta" href="#partner">Partnership</a>
+    <a class="nav-cta" href="#partner">Enquire</a>
   </header>
 
   <!-- ══════════════════ HERO — scroll-driven film ══════════════════ -->
@@ -40,7 +42,6 @@
       <div class="hero-frame" id="hero-frame" aria-hidden="true"></div>
 
       <div class="hero-copy" id="copy-1">
-        <p class="kicker"><i></i>Maison de l'Oud<i></i></p>
         <h1 class="brand" data-letters>BGS<span class="brand-dot">&#9670;</span>CORNER</h1>
         <p class="tagline">The House of Oud &mdash; Duba&iuml;</p>
       </div>
@@ -161,43 +162,34 @@
       </h2>
       <div class="cards">
         <article class="card" data-reveal>
-          <span class="card-num">No. I</span>
           <div class="card-art">
             <picture>
-              <source srcset="assets/oud-imperial.avif" type="image/avif">
-              <img src="assets/oud-imperial.webp" alt="Oud Impérial — square-cut crystal flacon with the house seal in gold" width="900" height="1125" loading="lazy" decoding="async">
+              <source srcset="assets/oud-imperial.avif?v=27" type="image/avif">
+              <img src="assets/oud-imperial.webp?v=27" alt="Oud Impérial — square-cut crystal flacon with the house seal in gold" width="900" height="900" loading="lazy" decoding="async">
             </picture>
           </div>
           <h3>Oud Imp&eacute;rial</h3>
-          <p class="card-notes">Vintage Hindi oud &middot; saffron &middot; smoked amber</p>
           <p class="card-copy">Twelve-year Assam oud, dense and regal, lifted by a thread of saffron light.</p>
-          <div class="card-foot">Extrait de Parfum &mdash; by private consultation</div>
         </article>
         <article class="card" data-reveal>
-          <span class="card-num">No. II</span>
           <div class="card-art">
             <picture>
-              <source srcset="assets/oud-ambre.avif" type="image/avif">
-              <img src="assets/oud-ambre.webp" alt="Oud Ambré — the BGS monogram cast in blackened steel around an amber phial" width="900" height="1125" loading="lazy" decoding="async">
+              <source srcset="assets/oud-ambre.avif?v=27" type="image/avif">
+              <img src="assets/oud-ambre.webp?v=27" alt="Oud Ambré — the BGS monogram cast in blackened steel around an amber phial" width="900" height="900" loading="lazy" decoding="async">
             </picture>
           </div>
           <h3>Oud Ambr&eacute;</h3>
-          <p class="card-notes">Cambodi oud &middot; grey amber &middot; Taif rose</p>
           <p class="card-copy">The desert at dusk &mdash; warm resin, sweet wind, a rose that refuses night.</p>
-          <div class="card-foot">Extrait de Parfum &mdash; by private consultation</div>
         </article>
         <article class="card" data-reveal>
-          <span class="card-num">No. III</span>
           <div class="card-art">
             <picture>
-              <source srcset="assets/oud-cristal.avif" type="image/avif">
-              <img src="assets/oud-cristal.webp" alt="Oud Cristal — diamond-cut crystal flacon with the house seal in gold" width="900" height="1125" loading="lazy" decoding="async">
+              <source srcset="assets/oud-cristal.avif?v=27" type="image/avif">
+              <img src="assets/oud-cristal.webp?v=27" alt="Oud Cristal — diamond-cut crystal flacon with the house seal in gold" width="900" height="900" loading="lazy" decoding="async">
             </picture>
           </div>
           <h3>Oud Cristal</h3>
-          <p class="card-notes">White oud &middot; iris &middot; cold incense</p>
           <p class="card-copy">Light through dark glass &mdash; a veil of iris over the palest oud we own.</p>
-          <div class="card-foot">Extrait de Parfum &mdash; by private consultation</div>
         </article>
       </div>
     </div>
@@ -206,12 +198,12 @@
   <!-- ══════════════════ 05 · THE CORNER ══════════════════ -->
   <section class="section corner tex" id="corner">
     <figure class="corner-media" data-reveal>
-      <div class="corner-media-inner"><img id="corner-img" alt="The first BGS CORNER kiosk — Pearl Executive Hotel, Dubai" loading="lazy"></div>
-      <figcaption>Corner No.&nbsp;001 &mdash; Pearl Executive Hotel, Duba&iuml;</figcaption>
+      <div class="corner-media-inner"><img id="corner-img" alt="The BGS CORNER kiosk — Rigga Al Buteen, Dubai" loading="lazy"></div>
+      <figcaption>Rigga Al Buteen &mdash; Duba&iuml;</figcaption>
     </figure>
   </section>
 
-  <!-- ══════════════════ PARTNERSHIP ══════════════════ -->
+  <!-- ══════════════════ ENQUIRE ══════════════════ -->
   <section class="partner-band tex" id="partner">
     <div class="wrap">
       <div class="partner" data-reveal>
@@ -223,11 +215,11 @@
             </g>
           </svg>
         </span>
-        <p class="kicker"><i></i>Partnership<i></i></p>
-        <p class="partner-line">The House opens its corners with a small circle of partners.</p>
-        <p class="partner-sub">Single corners and territory rights, for operators who understand
-        that patience is the product.</p>
-        <a class="btn-gold" href="mailto:info@bgscorner.com?subject=BGS%20CORNER%20%E2%80%94%20Partnership%20Enquiry">Enquire about a corner</a>
+        <p class="kicker"><i></i>Enquire<i></i></p>
+        <p class="partner-line">Every oud is sold by private consultation.</p>
+        <p class="partner-sub">Tell us what you are looking for &mdash; a first oud, a gift, or a
+        particular note &mdash; and we will guide you to it.</p>
+        <a class="btn-gold" data-enquire href="mailto:info@bgscorner.com?subject=BGS%20CORNER%20%E2%80%94%20Enquiry">Speak to the House</a>
       </div>
     </div>
   </section>
@@ -240,16 +232,58 @@
       </div>
       <div class="footer-col">
         <b>Visit</b>
-        <p>Corner No.&nbsp;001<br>Pearl Executive Hotel &middot; Duba&iuml;<br>Daily &middot; 10:00 &mdash; 00:00</p>
+        <p>4th &amp; 17th Street Corner<br>Rigga Al Buteen, near Deira Clock Tower<br>Duba&iuml;, United Arab Emirates<br>Daily &middot; 10:00 &mdash; 00:00</p>
+        <a class="map-link" href="https://maps.app.goo.gl/RSmurniR9BKBCxmz6" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M12 21s6.5-6.1 6.5-11A6.5 6.5 0 0 0 5.5 10c0 4.9 6.5 11 6.5 11z"/>
+            <circle cx="12" cy="10" r="2.4"/>
+          </g></svg>
+          <span>See on maps</span>
+        </a>
       </div>
       <div class="footer-col">
         <b>Write</b>
         <p>info@bgscorner.com<br>Private consultations<br>by appointment</p>
       </div>
     </div>
-    <span class="footer-fine">&copy; 2026 BGS CORNER &mdash; Maison de l'Oud. One house, one hundred corners.</span>
+    <span class="footer-fine">&copy; 2026 BGS CORNER &mdash; Maison de l'Oud, Duba&iuml;.</span>
   </footer>
 
-  <script src="main.js?v=17"></script>
+
+  <!-- ══════════════════ ENQUIRY DIALOG ══════════════════ -->
+  <dialog class="enquire" id="enquire" aria-labelledby="enquire-title">
+    <div class="enquire-inner">
+      <button class="enquire-close" type="button" aria-label="Close">&#215;</button>
+      <span class="seal draw in" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><g fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="9.5" y="9.5" width="21" height="21" class="stroke" pathLength="1"/>
+          <rect x="9.5" y="9.5" width="21" height="21" class="stroke" pathLength="1" transform="rotate(45 20 20)"/>
+        </g></svg>
+      </span>
+      <h2 class="enquire-title" id="enquire-title">Contact&nbsp;Us</h2>
+
+      <div class="enquire-actions">
+        <!-- TODO: replace 971000000000 with the house WhatsApp number -->
+        <a class="enquire-btn" id="enquire-wa"
+           href="https://wa.me/971000000000?text=I%20would%20like%20to%20enquire%20about%20BGS%20CORNER%20oud."
+           target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M12 3.4c-4.8 0-8.7 3.7-8.7 8.3 0 1.6.5 3.1 1.3 4.3l-1.2 4.2 4.4-1.2c1.2.6 2.6 1 4.2 1 4.8 0 8.7-3.7 8.7-8.3S16.8 3.4 12 3.4z"/>
+            <path d="M9.5 8.9c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4l.6 1.5c.1.2 0 .3-.1.4l-.4.5c-.1.1-.2.3-.1.4.5.8 1.4 1.6 2.2 2 .2.1.3 0 .4-.1l.5-.5c.1-.1.3-.2.4-.1l1.5.7c.2.1.3.2.3.4 0 .4-.1.7-.4 1-.3.3-.8.5-1.3.5-2.3 0-5.7-3.2-5.7-5.4 0-.5.2-1 .6-1.4z"/>
+          </g></svg>
+          <span>WhatsApp</span>
+        </a>
+        <a class="enquire-btn" href="mailto:info@bgscorner.com?subject=BGS%20CORNER%20%E2%80%94%20Enquiry">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+            <rect x="2.8" y="5.2" width="18.4" height="13.6" rx="1.4"/>
+            <path d="M3.4 6.2 12 12.8l8.6-6.6"/>
+          </g></svg>
+          <span>Email</span>
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="main.js?v=27"></script>
 </body>
 </html>

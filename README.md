@@ -1,8 +1,8 @@
 # BGS CORNER — Corner 60 FPS
 
 A scroll-driven website for **BGS CORNER**, the House of Oud — a premium
-perfume franchise with a vision of one hundred kiosk "corners" in the world's
-finest addresses. The hero scrubs a 300-frame product film (crystal flacon →
+perfumer selling rare ouds by private consultation from the Pearl Executive
+Hotel, Dubai. The hero scrubs a 300-frame product film (crystal flacon →
 kiosk reveal) on a full-screen canvas as you scroll.
 
 Oud is the signature and the site carries nothing else: four sections —

@@ -423,6 +423,24 @@
     .querySelectorAll("[data-reveal], [data-lines], .tex, .draw")
     .forEach((el) => io.observe(el));
 
+  /* ── enquiry dialog ──────────────────────────────────────────
+     The trigger stays an ordinary mailto link, so with no JS (or no
+     <dialog> support) the click still reaches a mail client. */
+  const enquire = document.getElementById("enquire");
+  if (enquire && typeof enquire.showModal === "function") {
+    document.querySelectorAll("[data-enquire]").forEach((trigger) => {
+      trigger.addEventListener("click", (e) => {
+        e.preventDefault();
+        enquire.showModal();
+      });
+    });
+    enquire.querySelector(".enquire-close")?.addEventListener("click", () => enquire.close());
+    // clicking the backdrop (the dialog's own box, outside the panel) closes it
+    enquire.addEventListener("click", (e) => {
+      if (e.target === enquire) enquire.close();
+    });
+  }
+
   /* ── nav state + image parallax ── */
   addEventListener("scroll", () => {
     nav.classList.toggle("solid", scrollY > innerHeight * 0.55);
