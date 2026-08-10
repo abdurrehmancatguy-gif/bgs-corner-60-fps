@@ -410,35 +410,11 @@
     line.appendChild(inner);
   });
 
-  /* ── stat counters ── */
-  function runCounter(el) {
-    const to = +el.dataset.count;
-    const pad = +(el.dataset.pad || 0);
-    const suffix = el.querySelector("i");
-    const suffixHTML = suffix ? suffix.outerHTML : "";
-    if (reduced || !Number.isFinite(to)) return;
-    const dur = 1500;
-    const t0 = performance.now();
-    const write = (v) => {
-      const s = pad ? String(v).padStart(pad, "0") : String(v);
-      el.innerHTML = s + suffixHTML;
-    };
-    const frame = (t) => {
-      const raw = Math.min((t - t0) / dur, 1);
-      const eased = 1 - Math.pow(1 - raw, 3);
-      write(Math.round(to * eased));
-      if (raw < 1) requestAnimationFrame(frame);
-    };
-    write(0);
-    requestAnimationFrame(frame);
-  }
-
   /* ── reveal observer ── */
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
       if (!e.isIntersecting) continue;
       e.target.classList.add("in");
-      e.target.querySelectorAll?.("[data-count]").forEach(runCounter);
       io.unobserve(e.target);
     }
   }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
