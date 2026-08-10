@@ -1,15 +1,14 @@
 # BGS CORNER — Corner 60 FPS
 
-A scroll-driven website for **BGS CORNER**, the House of Oud — a premium
-perfumer selling rare ouds by private consultation from the Pearl Executive
-Hotel, Dubai. The hero scrubs a 300-frame product film (crystal flacon →
-kiosk reveal) on a full-screen canvas as you scroll.
+A scroll-driven website for **BGS CORNER**, the House of Oud — a perfumer
+selling rare ouds and perfumes from Rigga Al Buteen, Dubai. The hero scrubs a
+300-frame product film (crystal flacon → shop reveal) on a full-screen canvas
+as you scroll.
 
 Oud is the signature and the site carries nothing else: four sections —
-The House, The Oud, The Collection and The Corner. The wider kiosk range
-(porcelain, calfskin, writing instruments) was drafted and then cut, since
-those objects are not yet real; the markup for it is in the history if it
-is wanted back.
+The House, The Oud, The Collection and The Corner. An earlier draft pitched a
+hundred-kiosk expansion and a range of house objects; both were cut, and are
+in the history if they are ever wanted back.
 
 ## The hero film
 
