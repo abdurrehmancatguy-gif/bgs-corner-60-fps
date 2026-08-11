@@ -1002,23 +1002,21 @@ em { font-style: italic; }
 
 @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr; } }
 
-.footer-mark {
-  display: block;
-  letter-spacing: .5em;
-  font-size: .78rem;
-  color: var(--gold);
-  margin-bottom: 1.1rem;
-}
-
+/* All three column heads share one box — same size, leading and margin — so
+   the columns start their content on the same line. */
+.footer-mark,
 .footer-col b {
   display: block;
   font-weight: 400;
-  font-size: .62rem;
+  font-size: .64rem;
+  line-height: 1.7;
   letter-spacing: .32em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 1rem;
+  margin: 0 0 1.1rem;
 }
+
+.footer-mark { letter-spacing: .44em; }
 
 .footer-col p { color: var(--cream-dim); font-size: .89rem; line-height: 1.95; }
 
@@ -1040,7 +1038,6 @@ em { font-style: italic; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: .6rem;
 }
 
 .legal-links button {
@@ -1049,10 +1046,12 @@ em { font-style: italic; }
   padding: 0;
   cursor: pointer;
   font-family: inherit;
+  text-align: left;
   color: var(--cream-dim);
-  font-size: .62rem;
-  letter-spacing: .22em;
-  text-transform: uppercase;
+  /* same metrics as .footer-col p, so column one's address, these links and
+     column three's email all sit on the same baselines */
+  font-size: .89rem;
+  line-height: 1.95;
   transition: color .35s var(--ease-soft);
 }
 
