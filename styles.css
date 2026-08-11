@@ -993,8 +993,10 @@ em { font-style: italic; }
   width: min(1180px, 100%);
   margin-inline: auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: clamp(2rem, 5vw, 4rem);
+  /* equal columns: the old 2fr on the first left a wide dead gap before Legal,
+     since its content is narrower than the share it was given */
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.6rem, 4vw, 3rem);
   padding-bottom: 3rem;
 }
 
