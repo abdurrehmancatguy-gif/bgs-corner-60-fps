@@ -441,6 +441,31 @@
     });
   }
 
+  /* ── legal dialog ─────────────────────────────────────────────
+     One panel, three documents; the trigger picks which pane shows. */
+  const legal = document.getElementById("legal");
+  if (legal && typeof legal.showModal === "function") {
+    const titles = { terms: "Terms & Conditions", privacy: "Privacy Policy", legal: "Legal" };
+    const label = legal.querySelector(".legal-title");
+    const body = legal.querySelector(".legal-body");
+
+    document.querySelectorAll("[data-legal]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const want = trigger.dataset.legal;
+        legal.querySelectorAll(".legal-pane").forEach((pane) => {
+          pane.hidden = pane.id !== `legal-${want}`;
+        });
+        label.textContent = titles[want] || "Legal";
+        legal.showModal();
+        body.scrollTop = 0;              // each document opens at its start
+      });
+    });
+    legal.querySelector(".legal-close")?.addEventListener("click", () => legal.close());
+    legal.addEventListener("click", (e) => {
+      if (e.target === legal) legal.close();
+    });
+  }
+
   /* ── nav state + image parallax ── */
   addEventListener("scroll", () => {
     nav.classList.toggle("solid", scrollY > innerHeight * 0.55);

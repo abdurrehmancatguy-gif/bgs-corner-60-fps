@@ -1015,6 +1015,128 @@ em { font-style: italic; }
   color: rgba(243, 234, 217, .32);
 }
 
+/* ── Legal dialog ───────────────────────────────────────────────
+   Long-form documents, so unlike the contact dialog this one is a tall
+   scrollable panel with the header pinned. */
+
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.6rem;
+  border-top: 1px solid rgba(201, 163, 90, .09);
+  padding-top: 2rem;
+}
+
+.footer-legal .footer-fine { border: 0; padding: 0; text-align: left; }
+
+.legal-links { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+
+.legal-links button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--cream-dim);
+  font-size: .62rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  transition: color .35s var(--ease-soft);
+}
+
+.legal-links button:hover { color: var(--gold-hi); }
+
+.legal {
+  border: 0;
+  padding: 0;
+  margin: auto;                    /* the global reset removes the UA's auto */
+  background: transparent;
+  width: min(760px, calc(100% - 2rem));
+  max-height: min(86vh, 900px);
+  color: var(--cream);
+}
+
+.legal::backdrop {
+  background: rgba(6, 4, 2, .88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.legal-inner {
+  display: flex;
+  flex-direction: column;
+  max-height: min(86vh, 900px);
+  background: var(--ink-2);
+  border: 1px solid var(--gold-line);
+}
+
+.legal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex: none;
+  padding: 1.1rem clamp(1.1rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--gold-line);
+  background: var(--ink-2);
+}
+
+.legal-title {
+  font-size: .64rem;
+  letter-spacing: .3em;
+  text-indent: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.legal-close {
+  background: none;
+  border: 0;
+  padding: .1rem .4rem;
+  cursor: pointer;
+  color: var(--cream-dim);
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: color .3s var(--ease-soft);
+}
+
+.legal-close:hover { color: var(--gold-hi); }
+
+.legal-body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1.4rem, 3.5vw, 2.4rem) clamp(1.1rem, 3vw, 2rem) clamp(2rem, 4vw, 2.8rem);
+}
+
+.legal-heading {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.4vw, 2rem);
+  color: var(--cream);
+  margin-bottom: 1.4rem;
+}
+
+.legal-pane h4 {
+  font-weight: 400;
+  font-size: .66rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 1.8rem 0 .6rem;
+}
+
+.legal-pane p,
+.legal-pane li { color: var(--cream-dim); font-size: .88rem; line-height: 1.85; }
+
+.legal-pane p + p { margin-top: .5rem; }
+
+.legal-pane ul { margin: .5rem 0 0 1.1rem; }
+.legal-pane li { margin-bottom: .35rem; }
+
+.legal[open] .legal-inner { animation: enquire-in .6s var(--ease) both; }
+
 /* directions link under the footer address */
 
 .map-link {
@@ -1053,4 +1175,5 @@ em { font-style: italic; }
   .draw .stroke { stroke-dashoffset: 0; opacity: 1; transition: none; }
   .curtain-mark, .curtain-sub { animation: none; opacity: 1; }
   .enquire[open] .enquire-inner { animation: none; }
+  .legal[open] .legal-inner { animation: none; }
 }

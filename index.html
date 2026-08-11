@@ -17,7 +17,7 @@
        visitor. Bump this when the CSS or JS changes. It is deliberately
        independent of FILM_VERSION in main.js — the film packs are ~15 MB, so
        they should only be re-versioned when the frames themselves change. -->
-  <link rel="stylesheet" href="styles.css?v=31">
+  <link rel="stylesheet" href="styles.css?v=32">
 </head>
 <body>
 
@@ -243,10 +243,17 @@
       </div>
       <div class="footer-col">
         <b>Write</b>
-        <p>info@bgscorner.com</p>
+        <p>info@bgscorner.com<br>+971 56 489 1974</p>
       </div>
     </div>
-    <span class="footer-fine">&copy; 2026 BGS CORNER &mdash; Maison de l'Oud, Duba&iuml;.</span>
+    <div class="footer-legal">
+      <span class="footer-fine">&copy; 2026 BGS CORNER</span>
+      <nav class="legal-links" aria-label="Legal">
+        <button type="button" data-legal="terms">Terms</button>
+        <button type="button" data-legal="privacy">Privacy Policy</button>
+        <button type="button" data-legal="legal">Legal</button>
+      </nav>
+    </div>
   </footer>
 
 
@@ -263,9 +270,8 @@
       <h2 class="enquire-title" id="enquire-title">Contact&nbsp;Us</h2>
 
       <div class="enquire-actions">
-        <!-- TODO: replace 971000000000 with the house WhatsApp number -->
         <a class="enquire-btn" id="enquire-wa"
-           href="https://wa.me/971000000000?text=I%20would%20like%20to%20enquire%20about%20BGS%20CORNER%20oud."
+           href="https://wa.me/971564891974?text=I%20would%20like%20to%20enquire%20about%20BGS%20CORNER%20oud."
            target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
             <path d="M12 3.4c-4.8 0-8.7 3.7-8.7 8.3 0 1.6.5 3.1 1.3 4.3l-1.2 4.2 4.4-1.2c1.2.6 2.6 1 4.2 1 4.8 0 8.7-3.7 8.7-8.3S16.8 3.4 12 3.4z"/>
@@ -284,6 +290,140 @@
     </div>
   </dialog>
 
-  <script src="main.js?v=31"></script>
+  <!-- ══════════════════ LEGAL DIALOG ══════════════════ -->
+  <dialog class="legal" id="legal" aria-labelledby="legal-title">
+    <div class="legal-inner">
+      <div class="legal-bar">
+        <span class="legal-title" id="legal-title">Legal</span>
+        <button class="legal-close" type="button" aria-label="Close">&#215;</button>
+      </div>
+      <div class="legal-body">
+      <section class="legal-pane" id="legal-terms" hidden>
+        <h3 class="legal-heading">Terms &amp; Conditions</h3>
+        <p>Welcome to the website of B G S Corner General Trading L.L.C. (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). By accessing or using our website and purchasing our products, you agree to be bound by these Terms &amp; Conditions (&quot;Terms&quot;). Please read them carefully.</p>
+        <h4>1. Company Information</h4>
+        <p>Legal Name: B G S Corner General Trading L.L.C.</p>
+        <p>Email: info@bgscorner.com</p>
+        <p>Phone: +971 56 489 1974</p>
+        <h4>2. Eligibility</h4>
+        <p>By using this website, you represent that you are at least 18 years of age and have the legal capacity to enter into a binding contract.</p>
+        <h4>3. Account &amp; Security</h4>
+        <p>You may be required to create an account. You are responsible for maintaining the confidentiality of your login details and for all activity under your account. Notify us immediately at info@bgscorner.com if you suspect any unauthorized use.</p>
+        <h4>4. Products &amp; Pricing</h4>
+        <p>We strive to display product colors, descriptions, and images accurately, but cannot guarantee exact representation on your screen. All prices are subject to change without notice. We reserve the right to modify or discontinue any product at any time. In the event of a pricing error, we may cancel affected orders and will notify you accordingly, with a full refund if payment has been made.</p>
+        <h4>5. Orders &amp; Payment</h4>
+        <p>Placing an order constitutes an offer to purchase. We reserve the right to accept or decline any order for reasons including product availability, suspicion of fraud, or pricing errors. Payment must be made in full at checkout using our accepted methods. Order confirmation does not signify final acceptance – the contract is formed upon shipment.</p>
+        <h4>6. Shipping &amp; Delivery</h4>
+        <p>We ship to the locations specified on our website. Delivery timelines are estimates and may be affected by factors beyond our control. Risk of loss and title pass to you upon delivery to the carrier. Any delivery damage must be reported within 48 hours with photographic evidence. Shipping charges and any applicable customs duties are your responsibility unless stated otherwise.</p>
+        <h4>7. Returns &amp; Refunds</h4>
+        <p>Our return policy allows returns within [7/14/30] days of delivery for eligible products that are unused, in original packaging, and accompanied by proof of purchase. To initiate a return, contact us at info@bgscorner.com or call +971 56 489 1974. Refunds are processed to the original payment method within 14 business days after we receive and inspect the returned item. Shipping costs are non-refundable, and return shipping is at your expense unless the product is defective or we made an error.</p>
+        <h4>8. Intellectual Property</h4>
+        <p>All content on the website – including logos, trademarks, text, graphics, images, and software – is the exclusive property of B G S Corner General Trading L.L.C. or its licensors and is protected by UAE and international copyright and trademark laws. No content may be reproduced or used for commercial purposes without our prior written consent.</p>
+        <h4>9. User Conduct</h4>
+        <p>You agree not to use the website for any unlawful purpose, upload viruses or malicious code, or disrupt the website’s functioning. You also agree not to violate the intellectual property or privacy rights of others.</p>
+        <h4>10. Limitation of Liability</h4>
+        <p>To the fullest extent permitted by law, B G S Corner General Trading L.L.C. shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the website or purchase of products. Our total liability for any claim related to a product shall not exceed the purchase price of that product.</p>
+        <h4>11. Indemnification</h4>
+        <p>You agree to indemnify and hold harmless B G S Corner General Trading L.L.C., its officers, directors, and employees from any claims, losses, or damages (including legal fees) arising out of your violation of these Terms or misuse of the website.</p>
+        <h4>12. Governing Law &amp; Dispute Resolution</h4>
+        <p>These Terms are governed by the laws of the United Arab Emirates. Any dispute shall first be attempted to be resolved amicably. If unresolved, it shall be subject to the exclusive jurisdiction of the competent courts in the relevant Emirate.</p>
+        <h4>13. Changes to Terms</h4>
+        <p>We may update these Terms at any time. Changes will be posted on this page, and your continued use of the website constitutes acceptance of the modified Terms.</p>
+        <h4>14. Contact Us</h4>
+        <p>For any questions about these Terms, please contact:</p>
+        <p>Email: info@bgscorner.com</p>
+        <p>Phone: +971 56 489 1974</p>
+      </section>
+      <section class="legal-pane" id="legal-privacy" hidden>
+        <h3 class="legal-heading">Privacy Policy</h3>
+        <p>B G S Corner General Trading L.L.C. (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your personal data and respecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or engage with our services.</p>
+        <h4>1. Information We Collect</h4>
+        <p>We may collect the following types of personal data:</p>
+        <ul>
+          <li>Contact &amp; Identity Data: Full name, email address, phone number, delivery/billing address.</li>
+          <li>Transaction Data: Products purchased, payment method details (we do not store full credit card numbers; payment processing is handled by a secure PCI-compliant gateway), order history.</li>
+          <li>Technical Data: IP address, browser type, device type, operating system, referring/exit pages, and clickstream data collected via cookies and similar technologies.</li>
+          <li>Communication Data: Any information you provide when contacting us via email, phone, or contact forms.</li>
+        </ul>
+        <h4>2. How We Collect Information</h4>
+        <p>We collect information:</p>
+        <ul>
+          <li>Directly from you when you place an order, create an account, subscribe to newsletters, or contact us.</li>
+          <li>Automatically as you navigate the website (through cookies, server logs, and analytics tools).</li>
+          <li>From third-party service providers (e.g., payment processors, delivery partners) that help us fulfill orders.</li>
+        </ul>
+        <h4>3. How We Use Your Information</h4>
+        <p>We use your personal data only for purposes necessary to provide our services and improve your experience:</p>
+        <ul>
+          <li>To process, fulfill, and ship your orders, and communicate order status.</li>
+          <li>To handle returns, refunds, and customer support requests.</li>
+          <li>To send transactional emails (order confirmations, invoices) and, with your consent, marketing communications. You can opt out of marketing at any time.</li>
+          <li>To analyze website usage and improve our product offerings, user interface, and security.</li>
+          <li>To comply with legal obligations and prevent fraud.</li>
+        </ul>
+        <h4>4. Legal Basis for Processing</h4>
+        <p>We process your personal data based on:</p>
+        <ul>
+          <li>Contractual necessity: to perform a contract with you (e.g., delivering products).</li>
+          <li>Legitimate interests: to improve our business, secure our website, and provide effective customer service.</li>
+          <li>Legal obligation: to meet regulatory requirements under UAE law.</li>
+          <li>Consent: for optional activities like marketing newsletters (you may withdraw consent at any time).</li>
+        </ul>
+        <h4>5. Cookies &amp; Tracking Technologies</h4>
+        <p>Our website uses cookies and similar technologies. Essential cookies are required for basic site operations (shopping cart, secure login). Analytical/performance cookies help us understand visitor behavior anonymously. You can control cookie preferences through your browser settings; however, disabling cookies may affect website functionality.</p>
+        <h4>6. Data Sharing &amp; Disclosure</h4>
+        <p>We do not sell, trade, or rent your personal data. We may share information with:</p>
+        <ul>
+          <li>Service Providers: Trusted partners assisting in website hosting, payment processing, order delivery, email distribution, and analytics, bound by data protection obligations.</li>
+          <li>Legal &amp; Regulatory Authorities: If required by law, court order, or to protect our rights, property, or safety.</li>
+        </ul>
+        <h4>7. Data Transfer &amp; Storage</h4>
+        <p>Your data is stored on secure servers, which may be located inside or outside the UAE. Where transfers occur, we ensure appropriate safeguards are in place to keep your data secure and in compliance with this policy.</p>
+        <h4>8. Data Security</h4>
+        <p>We implement commercially reasonable technical and organizational measures – including encryption, firewalls, and SSL technology – to protect your personal information. No method of transmission over the Internet is 100% secure; we cannot guarantee absolute security.</p>
+        <h4>9. Data Retention</h4>
+        <p>We retain your personal data only as long as necessary to fulfill the purposes outlined herein or as required by applicable law. Transaction records may be kept for tax and commercial compliance periods, after which data is securely deleted or anonymized.</p>
+        <h4>10. Your Rights</h4>
+        <p>Subject to legal limitations, you may have the right to:</p>
+        <ul>
+          <li>Access the personal data we hold about you.</li>
+          <li>Request correction of inaccurate or incomplete data.</li>
+          <li>Request erasure of your data in certain circumstances.</li>
+          <li>Object to or restrict processing based on legitimate interests.</li>
+          <li>Withdraw consent for marketing communications at any time.</li>
+          <li>Request a copy of your data in a structured machine-readable format.</li>
+        </ul>
+        <p>To exercise any of these rights, contact us at info@bgscorner.com or call +971 56 489 1974. We will respond within a reasonable timeframe.</p>
+        <h4>11. Third-Party Links</h4>
+        <p>Our website may contain links to external websites not operated by us. We are not responsible for their privacy practices and encourage you to review their policies separately.</p>
+        <h4>12. Children’s Privacy</h4>
+        <p>Our website is not directed to individuals under 18. We do not knowingly collect personal data from minors. If we become aware that a child has provided personal data, we will promptly delete it.</p>
+        <h4>13. Changes to This Privacy Policy</h4>
+        <p>We may update this policy from time to time. Changes will be posted on this page, and material changes may be communicated via email or a website notice.</p>
+        <h4>14. Contact Us</h4>
+        <p>For any questions or concerns about our privacy practices:</p>
+        <p>Email: info@bgscorner.com</p>
+        <p>Phone: +971 56 489 1974</p>
+      </section>
+      <section class="legal-pane" id="legal-legal" hidden>
+        <h3 class="legal-heading">Legal</h3>
+        <p>The website is operated by B G S Corner General Trading L.L.C., a company registered in Dubai, United Arab Emirates.</p>
+        <h4>Company</h4>
+        <p>Legal Name: B G S Corner General Trading L.L.C.</p>
+        <p>4th &amp; 17th Street Corner, Rigga Al Buteen, near Deira Clock Tower, Dubai, United Arab Emirates</p>
+        <p>Email: info@bgscorner.com</p>
+        <p>Phone: +971 56 489 1974</p>
+        <h4>Intellectual Property</h4>
+        <p>All content on this website – including logos, trademarks, text, graphics, images, and software – is the exclusive property of B G S Corner General Trading L.L.C. or its licensors and is protected by UAE and international copyright and trademark laws. No content may be reproduced or used for commercial purposes without our prior written consent.</p>
+        <h4>Governing Law</h4>
+        <p>These terms and any dispute arising from use of this website are governed by the laws of the United Arab Emirates, subject to the exclusive jurisdiction of the competent courts in the relevant Emirate.</p>
+        <h4>Documents</h4>
+        <p>See also the Terms &amp; Conditions and the Privacy Policy, available from the footer of every page.</p>
+      </section>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="main.js?v=32"></script>
 </body>
 </html>
