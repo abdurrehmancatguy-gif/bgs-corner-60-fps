@@ -22,7 +22,7 @@
      reach visitors who already have the old film cached. Changing this forces a
      multi-megabyte re-download, so it is independent of the ?v= on the script
      and stylesheet in index.html — bump that one for code changes. */
-  const FILM_VERSION = "3";
+  const FILM_VERSION = "4";
 
   /* Quality tiers, best first. `min` is the required viewport width in
      device pixels; AVIF tiers are skipped when the browser can't decode it. */
@@ -155,10 +155,16 @@
   }
 
   /* hero copy phases in film-progress space: [in-start, in-end, out-start, out-end] */
+  /* Retimed for the current film, whose beats are: monogram plaque -> boxes ->
+     reveal -> bottles -> macro -> shop. The footage also carries burned-in
+     captions ("PURE OUD" left, "24K GOLD BAR" right) through most of its
+     length, so each panel is placed where they are absent or weakest: the
+     opening (frames 1-55), the mid-bottle run where the left caption drops
+     out (~136-193), and the closing shop (from ~271). */
   const PHASES = [
-    [-0.01, 0.00, 0.15, 0.25],
-    [0.31, 0.41, 0.53, 0.63],
-    [0.73, 0.83, 1.01, 1.02],
+    [-0.01, 0.00, 0.12, 0.18],
+    [0.45, 0.51, 0.58, 0.64],
+    [0.90, 0.95, 1.01, 1.02],
   ];
 
   function phaseAlpha(p, [a, b, c, d]) {
@@ -445,7 +451,7 @@
      One panel, three documents; the trigger picks which pane shows. */
   const legal = document.getElementById("legal");
   if (legal && typeof legal.showModal === "function") {
-    const titles = { terms: "Terms & Conditions", privacy: "Privacy Policy", legal: "Legal" };
+    const titles = { terms: "Terms & Conditions", privacy: "Privacy Policy" };
     const label = legal.querySelector(".legal-title");
     const body = legal.querySelector(".legal-body");
 

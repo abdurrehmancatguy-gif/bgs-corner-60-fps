@@ -17,7 +17,7 @@
        visitor. Bump this when the CSS or JS changes. It is deliberately
        independent of FILM_VERSION in main.js — the film packs are ~15 MB, so
        they should only be re-versioned when the frames themselves change. -->
-  <link rel="stylesheet" href="styles.css?v=32">
+  <link rel="stylesheet" href="styles.css?v=34">
 </head>
 <body>
 
@@ -37,7 +37,7 @@
   <!-- ══════════════════ HERO — scroll-driven film ══════════════════ -->
   <section class="hero" id="top">
     <div class="hero-sticky">
-      <canvas id="film" aria-label="A crystal BGS CORNER flacon of vintage oud, revealed in the Dubai corner boutique"></canvas>
+      <canvas id="film" aria-label="The three BGS CORNER ouds — the house seal, the boxed flacons, and the shop"></canvas>
       <div class="hero-vignette"></div>
       <div class="hero-frame" id="hero-frame" aria-hidden="true"></div>
 
@@ -229,6 +229,10 @@
       <div class="footer-col">
         <span class="footer-mark">BGS&nbsp;&#9670;&nbsp;CORNER</span>
         <p>The House of Oud<br>Duba&iuml;, United Arab Emirates</p>
+        <nav class="legal-links" aria-label="Legal">
+          <button type="button" data-legal="terms">Terms &amp; Conditions</button>
+          <button type="button" data-legal="privacy">Privacy Policy</button>
+        </nav>
       </div>
       <div class="footer-col">
         <b>Visit</b>
@@ -246,14 +250,7 @@
         <p>info@bgscorner.com<br>+971 56 489 1974</p>
       </div>
     </div>
-    <div class="footer-legal">
-      <span class="footer-fine">&copy; 2026 BGS CORNER</span>
-      <nav class="legal-links" aria-label="Legal">
-        <button type="button" data-legal="terms">Terms</button>
-        <button type="button" data-legal="privacy">Privacy Policy</button>
-        <button type="button" data-legal="legal">Legal</button>
-      </nav>
-    </div>
+    <span class="footer-fine">&copy; 2026 BGS CORNER</span>
   </footer>
 
 
@@ -405,25 +402,10 @@
         <p>Email: info@bgscorner.com</p>
         <p>Phone: +971 56 489 1974</p>
       </section>
-      <section class="legal-pane" id="legal-legal" hidden>
-        <h3 class="legal-heading">Legal</h3>
-        <p>The website is operated by B G S Corner General Trading L.L.C., a company registered in Dubai, United Arab Emirates.</p>
-        <h4>Company</h4>
-        <p>Legal Name: B G S Corner General Trading L.L.C.</p>
-        <p>4th &amp; 17th Street Corner, Rigga Al Buteen, near Deira Clock Tower, Dubai, United Arab Emirates</p>
-        <p>Email: info@bgscorner.com</p>
-        <p>Phone: +971 56 489 1974</p>
-        <h4>Intellectual Property</h4>
-        <p>All content on this website – including logos, trademarks, text, graphics, images, and software – is the exclusive property of B G S Corner General Trading L.L.C. or its licensors and is protected by UAE and international copyright and trademark laws. No content may be reproduced or used for commercial purposes without our prior written consent.</p>
-        <h4>Governing Law</h4>
-        <p>These terms and any dispute arising from use of this website are governed by the laws of the United Arab Emirates, subject to the exclusive jurisdiction of the competent courts in the relevant Emirate.</p>
-        <h4>Documents</h4>
-        <p>See also the Terms &amp; Conditions and the Privacy Policy, available from the footer of every page.</p>
-      </section>
       </div>
     </div>
   </dialog>
 
-  <script src="main.js?v=32"></script>
+  <script src="main.js?v=34"></script>
 </body>
 </html>

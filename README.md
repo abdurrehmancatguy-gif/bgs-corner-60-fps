@@ -2,7 +2,7 @@
 
 A scroll-driven website for **BGS CORNER**, the House of Oud — a perfumer
 selling rare ouds and perfumes from Rigga Al Buteen, Dubai. The hero scrubs a
-300-frame product film (crystal flacon → shop reveal) on a full-screen canvas
+301-frame product film (house seal → boxed flacons → shop) on a full-screen canvas
 as you scroll.
 
 Oud is the signature and the site carries nothing else: four sections —
@@ -17,9 +17,9 @@ binary pack in [assets/](assets):
 
 | Pack | Resolution | Frames | Codec | Size |
 |---|---|---|---|---|
-| `film-uhd.avif.bin` | 2560×1440 | 300 | AVIF q68 | 15.0 MB |
-| `film-hd.avif.bin` | 1600×900 | 300 | AVIF q66 | 9.3 MB |
-| `film-sd.webp.bin` | 1280×720 | 150 | WebP q78 | 4.4 MB |
+| `film-uhd.avif.bin` | 2560×1440 | 301 | AVIF q68 | 22.9 MB |
+| `film-hd.avif.bin` | 1600×900 | 301 | AVIF q66 | 14.3 MB |
+| `film-sd.webp.bin` | 1280×720 | 151 | WebP q78 | 6.3 MB |
 
 Pack format:
 
@@ -43,18 +43,27 @@ exists only for browsers without AVIF support.
 
 ## Rebuilding the packs
 
-The source 8K frames are not in the repo. Extract every 2nd frame to
-2560×1440 PNGs first:
+The source frames are not in the repo. Downscale them to 2560×1440 first —
+`uhd_png/` is gitignored, so it can live in the repo directory:
 
 ```bash
-ffmpeg -framerate 60 -i frame_%06d.png -vf "select='not(mod(n\,2))',scale=2560:1440:flags=lanczos" -fps_mode vfr uhd_png/u_%03d.png
+ffmpeg -i frames/frame_%04d.png -vf "scale=2560:1440:flags=lanczos" uhd_png/u_%03d.png
 ```
 
-Then encode the packs (requires Pillow with AVIF support):
+Then encode all three tiers in one pass (needs Pillow with AVIF support):
 
 ```bash
-python3 build_packs.py && python3 build_tiers.py
+python3 build_film.py
 ```
+
+Frame count is read from the directory, so a film of any length works. Two
+things must follow a rebuild:
+
+- bump `FILM_VERSION` in [main.js](main.js), or returning visitors keep the
+  cached film;
+- re-time `PHASES` in [main.js](main.js). The three hero copy panels are placed
+  against specific beats in the current film, so new footage needs new numbers.
+
 
 ## Run locally
 

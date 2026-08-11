@@ -226,6 +226,21 @@ em { font-style: italic; }
 
 .hero-copy .btn-gold { pointer-events: auto; }
 
+/* The film is no longer a dark studio set — it opens on a lit gold plaque and
+   closes in a bright shop — so the copy carries its own soft scrim rather than
+   relying on the footage being dark behind it. */
+.hero-copy { isolation: isolate; }
+
+.hero-copy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(58% 44% at 50% 50%,
+              rgba(6, 4, 2, .64), rgba(6, 4, 2, .30) 56%, transparent 78%);
+}
+
 /* the headline carries its own parallax layer on top of the block's */
 .hero-copy .brand,
 .hero-copy .line { will-change: transform; }
@@ -1019,19 +1034,13 @@ em { font-style: italic; }
    Long-form documents, so unlike the contact dialog this one is a tall
    scrollable panel with the header pinned. */
 
-.footer-legal {
+.legal-links {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem 1.6rem;
-  border-top: 1px solid rgba(201, 163, 90, .09);
-  padding-top: 2rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .55rem;
+  margin-top: 1.4rem;
 }
-
-.footer-legal .footer-fine { border: 0; padding: 0; text-align: left; }
-
-.legal-links { display: flex; flex-wrap: wrap; gap: 1.4rem; }
 
 .legal-links button {
   background: none;
