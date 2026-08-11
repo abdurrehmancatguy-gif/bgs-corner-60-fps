@@ -1018,6 +1018,8 @@ em { font-style: italic; }
 
 .footer-mark { letter-spacing: .44em; }
 
+.footer-col { text-align: center; }
+
 .footer-col p { color: var(--cream-dim); font-size: .89rem; line-height: 1.95; }
 
 .footer-fine {
@@ -1037,7 +1039,7 @@ em { font-style: italic; }
 .legal-links {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .legal-links button {
@@ -1046,7 +1048,6 @@ em { font-style: italic; }
   padding: 0;
   cursor: pointer;
   font-family: inherit;
-  text-align: left;
   color: var(--cream-dim);
   /* same metrics as .footer-col p, so column one's address, these links and
      column three's email all sit on the same baselines */
