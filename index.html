@@ -17,7 +17,7 @@
        visitor. Bump this when the CSS or JS changes. It is deliberately
        independent of FILM_VERSION in main.js — the film packs are ~15 MB, so
        they should only be re-versioned when the frames themselves change. -->
-  <link rel="stylesheet" href="styles.css?v=38">
+  <link rel="stylesheet" href="styles.css?v=40">
 </head>
 <body>
 
@@ -120,7 +120,13 @@
   </section>
 
   <!-- ══════════════════ 02 · THE OUD ══════════════════ -->
-  <section class="section oud tex" id="oud">
+  <section class="section oud" id="oud">
+      <div class="oud-film" aria-hidden="true">
+        <video id="oud-video" poster="assets/oud-film-poster.jpg?v=39"
+               muted loop playsinline preload="metadata">
+          <source src="assets/oud-film.mp4?v=39" type="video/mp4">
+        </video>
+      </div>
     <div class="wrap">
       <p class="kicker num" data-reveal><b>02</b>The Oud<i class="rule"></i></p>
       <h2 class="display" data-lines>
@@ -405,6 +411,6 @@
     </div>
   </dialog>
 
-  <script src="main.js?v=38"></script>
+  <script src="main.js?v=40"></script>
 </body>
 </html>

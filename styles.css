@@ -662,7 +662,42 @@ em { font-style: italic; }
 
 /* ── 02 · The Oud ───────────────────────────────────────────── */
 
-.oud { background: var(--ink-2); }
+/* The Oud carries a looping film instead of the khatam ground. A scrim over
+   it keeps the heading and the four steps legible against a moving image. */
+.oud {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--ink-2);
+}
+
+.oud-film {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.oud-film video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 1.6s var(--ease);
+}
+
+.oud-film.in video { opacity: 1; }
+
+.oud-film::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, var(--ink-2) 0%, rgba(16,13,8,.42) 22%,
+                                rgba(16,13,8,.42) 78%, var(--ink-2) 100%),
+    rgba(11, 9, 6, .62);
+}
 
 .steps {
   display: grid;
@@ -1186,4 +1221,5 @@ em { font-style: italic; }
   .curtain-mark, .curtain-sub { animation: none; opacity: 1; }
   .enquire[open] .enquire-inner { animation: none; }
   .legal[open] .legal-inner { animation: none; }
+  .oud-film video { opacity: 1; transition: none; }
 }

@@ -447,6 +447,29 @@
     });
   }
 
+  /* ── The Oud's background film ────────────────────────────────
+     Plays only while the section is on screen: no point decoding video
+     the visitor cannot see, and it keeps the hero's scrubbing smooth. */
+  const oudFilm = document.querySelector(".oud-film");
+  const oudVideo = document.getElementById("oud-video");
+  if (oudFilm && oudVideo) {
+    if (reduced) {
+      oudFilm.classList.add("in");          // hold on the poster frame
+    } else {
+      const vio = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            oudFilm.classList.add("in");
+            oudVideo.play().catch(() => {});   // autoplay can still be refused
+          } else {
+            oudVideo.pause();
+          }
+        }
+      }, { rootMargin: "200px 0px" });
+      vio.observe(oudFilm);
+    }
+  }
+
   /* ── legal dialog ─────────────────────────────────────────────
      One panel, three documents; the trigger picks which pane shows. */
   const legal = document.getElementById("legal");
