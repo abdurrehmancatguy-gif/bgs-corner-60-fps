@@ -68,10 +68,18 @@ things must follow a rebuild:
 ## Run locally
 
 ```bash
-python3 -m http.server 4560
+python3 serve.py
 ```
 
 Then open <http://localhost:4560>.
+
+Use this rather than `python3 -m http.server`. That one sends no
+`Cache-Control` at all, so browsers fall back to a heuristic and reuse
+`index.html` without asking. Since the `?v=` cache busters live *inside*
+index.html, a stale document keeps pointing at the stale stylesheet and edits
+appear to do nothing. `serve.py` revalidates the document every time and lets
+everything it references cache hard, which is what the versioning scheme
+assumes.
 
 ## Stack
 
