@@ -371,10 +371,6 @@
     curtainFill.style.transform = "scaleX(1)";
     pump();
 
-    // the corner section reuses the film's closing frame — no extra image
-    // file ships in the repo
-    const img = document.getElementById("corner-img");
-    if (img && blobs[count - 1]) img.src = URL.createObjectURL(blobs[count - 1]);
 
     return { tier: tier.url, count, frameW, frameH, ahead, behind };
   }
@@ -500,20 +496,6 @@
     nav.classList.toggle("solid", scrollY > innerHeight * 0.55);
   }, { passive: true });
 
-  const parallaxImg = document.querySelector(".corner-media img");
-  if (parallaxImg && !reduced) {
-    const pio = new IntersectionObserver((entries) => {
-      for (const e of entries) parallaxImg.dataset.vis = e.isIntersecting ? "1" : "";
-    });
-    pio.observe(parallaxImg);
-    addEventListener("scroll", () => {
-      if (!parallaxImg.dataset.vis) return;
-      const r = parallaxImg.getBoundingClientRect();
-      const mid = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
-      parallaxImg.style.transform =
-        `translate3d(0, ${(-mid * 34).toFixed(2)}px, 0) scale(1.09)`;
-    }, { passive: true });
-  }
 
   /* ── pointer parallax on hero copy ── */
   if (!reduced && matchMedia("(pointer: fine)").matches) {

@@ -17,7 +17,7 @@
        visitor. Bump this when the CSS or JS changes. It is deliberately
        independent of FILM_VERSION in main.js — the film packs are ~15 MB, so
        they should only be re-versioned when the frames themselves change. -->
-  <link rel="stylesheet" href="styles.css?v=41">
+  <link rel="stylesheet" href="styles.css?v=43">
 </head>
 <body>
 
@@ -204,7 +204,14 @@
   <!-- ══════════════════ 05 · THE CORNER ══════════════════ -->
   <section class="section corner tex" id="corner">
     <figure class="corner-media" data-reveal>
-      <div class="corner-media-inner"><img id="corner-img" alt="The BGS CORNER kiosk — Rigga Al Buteen, Dubai" loading="lazy"></div>
+      <div class="corner-media-inner">
+          <picture>
+            <source srcset="assets/kiosk.avif?v=42" type="image/avif">
+            <img id="corner-img" src="assets/kiosk.jpg?v=42"
+                 alt="The BGS CORNER kiosk — gold-lit black cabinetry, the house flacons on display, Rigga Al Buteen, Dubai"
+                 width="1448" height="1086" loading="lazy" decoding="async">
+          </picture>
+        </div>
       <figcaption class="corner-caption">
         <span class="kicker"><i></i>The Corner<i></i></span>
         <span class="corner-line">Come and find us.</span>
@@ -415,6 +422,6 @@
     </div>
   </dialog>
 
-  <script src="main.js?v=41"></script>
+  <script src="main.js?v=43"></script>
 </body>
 </html>
