@@ -843,23 +843,47 @@ em { font-style: italic; }
   will-change: transform;
 }
 
+/* the shop photograph carries copy, so it is dimmed enough to read over and
+   feathered into the section at top and bottom */
 .corner-media::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(11,9,6,.4), transparent 28%, transparent 60%, var(--ink));
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, var(--ink) 0%, rgba(11,9,6,.34) 26%,
+                                rgba(11,9,6,.34) 68%, var(--ink) 100%),
+    radial-gradient(78% 62% at 50% 50%, rgba(6,4,2,.30), rgba(6,4,2,.66) 100%),
+    rgba(11, 9, 6, .42);
+}
+
+.corner-caption {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .2rem;
+  padding: 1.4rem;
+  text-align: center;
   pointer-events: none;
 }
 
-.corner-media figcaption {
-  position: absolute;
-  bottom: clamp(1rem, 3vw, 2.4rem);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  max-width: min(90vw, 52ch);
-  text-align: center;
-  white-space: nowrap;
+.corner-caption .kicker { margin-bottom: .9rem; }
+
+.corner-line {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4.4vw, 3.4rem);
+  line-height: 1.16;
+  color: var(--cream);
+  text-shadow: 0 2px 34px rgba(0, 0, 0, .6);
+}
+
+.corner-where {
+  margin-top: 1rem;
   font-size: .6rem;
   letter-spacing: .34em;
   text-indent: .34em;
@@ -867,15 +891,7 @@ em { font-style: italic; }
   color: var(--cream-dim);
 }
 
-/* the caption is too wide to hold on one line on a phone */
-@media (max-width: 640px) {
-  .corner-media figcaption {
-    white-space: normal;
-    letter-spacing: .22em;
-    text-indent: .22em;
-    line-height: 1.9;
-  }
-}
+
 
 /* ── Partnership band ───────────────────────────────────────── */
 
