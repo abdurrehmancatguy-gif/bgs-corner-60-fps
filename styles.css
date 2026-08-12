@@ -1167,21 +1167,43 @@ em { font-style: italic; }
   background: var(--ink);
 }
 
+/* Three equal thirds was the wrong shape for this material. The house block
+   runs to five lines and a button; Write and Legal are two lines each. Equal
+   columns hand all three the same width, so the two short ones are mostly
+   air and the row reads as gaps rather than groups.
+
+   So the house takes the slack and the two lists are sized to their own
+   content, sitting together at the right. The space that is left collects in
+   one deliberate gutter between the two halves instead of pooling under the
+   short columns. Everything still reads from its own left edge. */
 .footer-inner {
   width: min(1180px, 100%);
   margin-inline: auto;
   display: grid;
-  /* equal columns: the old 2fr on the first left a wide dead gap before Legal,
-     since its content is narrower than the share it was given */
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.6rem, 4vw, 3rem);
-  padding-bottom: 3rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(2.4rem, 7vw, 6rem);
+  padding-bottom: clamp(2.4rem, 5vw, 3.4rem);
 }
 
-@media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr; } }
+.footer-lists {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: clamp(2.2rem, 6vw, 5rem);
+}
 
-/* All three column heads share one box — same size, leading and margin — so
-   the columns start their content on the same line. */
+@media (max-width: 720px) {
+  .footer-inner { grid-template-columns: 1fr; }
+}
+
+/* Write and Legal stay side by side down to the narrowest common phone —
+   the two lists together measure about 293px against 337px of usable width
+   at 375. Below that they stack rather than hyphenate. */
+@media (max-width: 340px) {
+  .footer-lists { grid-template-columns: 1fr; }
+}
+
+/* Every head shares one box — same size, leading and margin — so the house
+   mark and both list heads start their content on the same line. */
 .footer-mark,
 .footer-col b {
   display: block;
@@ -1196,17 +1218,59 @@ em { font-style: italic; }
 
 .footer-mark { letter-spacing: .44em; }
 
-/* Every column reads from its own left edge, so the three heads and the three
-   bodies all start on the same vertical, at every width. */
+.footer-house,
 .footer-col { text-align: left; }
 
-.footer-col p { color: var(--cream-dim); font-size: .89rem; line-height: 1.95; }
+/* the house line sits closer to the mark than to the address, which groups it
+   with the name it belongs to */
+.footer-line {
+  margin-bottom: .55rem;
+  color: var(--cream);
+  font-size: .89rem;
+  line-height: 1.95;
+}
+
+.footer-address {
+  font-style: normal;                /* <address> italicises by default */
+  color: var(--cream-dim);
+  font-size: .89rem;
+  line-height: 1.95;
+}
+
+.footer-stack { list-style: none; }
+
+.footer-stack a,
+.footer-stack button {
+  display: inline-block;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  text-decoration: none;
+  color: var(--cream-dim);
+  /* one set of metrics for the address, the links and the buttons, so every
+     line in the footer sits on the same baseline grid */
+  font-size: .89rem;
+  line-height: 1.95;
+  transition: color .35s var(--ease-soft);
+}
+
+.footer-stack a:hover,
+.footer-stack button:hover,
+.footer-stack a:focus-visible,
+.footer-stack button:focus-visible { color: var(--gold-hi); }
+
+.footer-base {
+  width: min(1180px, 100%);
+  margin-inline: auto;
+  border-top: 1px solid rgba(201, 163, 90, .09);
+  padding-top: clamp(1.6rem, 3vw, 2rem);
+}
 
 .footer-fine {
   display: block;
-  text-align: center;
-  border-top: 1px solid rgba(201, 163, 90, .09);
-  padding-top: 2rem;
   font-size: .62rem;
   letter-spacing: .16em;
   color: rgba(243, 234, 217, .32);
@@ -1215,30 +1279,6 @@ em { font-style: italic; }
 /* ── Legal dialog ───────────────────────────────────────────────
    Long-form documents, so unlike the contact dialog this one is a tall
    scrollable panel with the header pinned. */
-
-/* a flex column ignores text-align for its items, so the axis is set here to
-   match the left-oriented columns around it */
-.legal-links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.legal-links button {
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  font-family: inherit;
-  color: var(--cream-dim);
-  /* same metrics as .footer-col p, so column one's address, these links and
-     column three's email all sit on the same baselines */
-  font-size: .89rem;
-  line-height: 1.95;
-  transition: color .35s var(--ease-soft);
-}
-
-.legal-links button:hover { color: var(--gold-hi); }
 
 .legal {
   border: 0;
