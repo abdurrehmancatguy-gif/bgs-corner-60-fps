@@ -844,23 +844,22 @@ em { font-style: italic; }
   height: auto;
   max-height: min(82vh, 880px);
   object-fit: cover;
-  filter: saturate(.94);
 }
 
-/* The photograph is already a dark, gold-lit interior, so it needs far less
-   dimming than a bright frame would. The weight sits behind the copy in the
-   middle and lifts towards the edges, which keeps the lit sign above and the
-   display cases below readable. */
+/* The render arrives lit the way it should be seen — warm gold on black — so
+   the only dimming left is what the copy actually needs. A soft pool behind
+   the two lines of text, and a feather at top and bottom so the photograph
+   melts into the page instead of ending on a hard edge. No flat wash over
+   the whole plate: that was what greyed the gold out. */
 .corner-media::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(46% 34% at 50% 50%, rgba(6,4,2,.74), rgba(6,4,2,.30) 68%, transparent 100%),
-    linear-gradient(to bottom, var(--ink) 0%, transparent 12%,
-                                transparent 88%, var(--ink) 100%),
-    rgba(11, 9, 6, .18);
+    radial-gradient(44% 30% at 50% 50%, rgba(6,4,2,.56), rgba(6,4,2,.16) 72%, transparent 100%),
+    linear-gradient(to bottom, var(--ink) 0%, transparent 10%,
+                                transparent 90%, var(--ink) 100%);
 }
 
 .corner-caption {
@@ -885,7 +884,10 @@ em { font-style: italic; }
   font-size: clamp(1.9rem, 4.4vw, 3.4rem);
   line-height: 1.16;
   color: var(--cream);
-  text-shadow: 0 2px 34px rgba(0, 0, 0, .6);
+  /* two shadows: a tight one for edge contrast against the lit sign, a wide
+     one for the pool — the plate is brighter now, so the text carries more
+     of its own legibility instead of leaning on the scrim */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .55), 0 2px 40px rgba(0, 0, 0, .85);
 }
 
 .corner-where {
