@@ -832,15 +832,18 @@ em { font-style: italic; }
   margin-bottom: clamp(3.6rem, 8vw, 7rem);
 }
 
-.corner-media-inner { overflow: hidden; background: var(--ink); }
+.corner-media-inner { overflow: hidden; }
 
-/* contained, not cropped: the render's value is the whole kiosk — the lit sign
-   above and the display cases below are the parts a crop would lose */
+/* Full-bleed: the photograph meets both edges of the screen at every width.
+   height:auto lets it keep its own proportions until it would get too tall,
+   at which point max-height caps the band and cover trims top and bottom —
+   the sides still touch either way. */
 .corner-media img {
   display: block;
   width: 100%;
-  max-height: min(78vh, 760px);
-  object-fit: contain;
+  height: auto;
+  max-height: min(82vh, 880px);
+  object-fit: cover;
   filter: saturate(.94);
 }
 
