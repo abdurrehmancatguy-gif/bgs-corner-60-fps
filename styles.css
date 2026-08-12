@@ -959,13 +959,24 @@ em { font-style: italic; }
    margin; on the bar it shares a row, so the margin comes off */
 .corner-map-bar .map-link { margin-top: 0; }
 
-.corner-map-addr {
+.corner-map-where {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.corner-map-addr,
+.corner-map-hours {
   font-size: .64rem;
   line-height: 1.7;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--cream-dim);
 }
+
+.corner-map-addr { color: var(--cream-dim); }
+
+/* the hours carry the gold so they read first of the two */
+.corner-map-hours { color: var(--gold); }
 
 @media (max-width: 640px) {
   .corner-map-bar { justify-content: center; text-align: center; }
