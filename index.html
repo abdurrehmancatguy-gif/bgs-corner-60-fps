@@ -17,7 +17,7 @@
        visitor. Bump this when the CSS or JS changes. It is deliberately
        independent of FILM_VERSION in main.js — the film packs are ~15 MB, so
        they should only be re-versioned when the frames themselves change. -->
-  <link rel="stylesheet" href="styles.css?v=45">
+  <link rel="stylesheet" href="styles.css?v=46">
 </head>
 <body>
 
@@ -218,6 +218,38 @@
         <span class="corner-where">Rigga Al Buteen &mdash; Duba&iuml;</span>
       </figcaption>
     </figure>
+
+    <div class="wrap">
+      <div class="corner-map" data-reveal>
+        <p class="kicker"><i></i>Visit<i></i></p>
+        <div class="corner-map-frame">
+          <!-- The iframe never receives pointer events, so the wheel is never
+               captured and the page keeps scrolling over the map. The anchor
+               above it carries the whole panel to Google Maps instead. -->
+          <iframe
+            src="https://maps.google.com/maps?q=25.2585802,55.3224703&amp;z=16&amp;output=embed"
+            title="Map showing BGS CORNER at Rigga Al Buteen, Duba&iuml;"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            tabindex="-1" aria-hidden="true"></iframe>
+          <a class="corner-map-hit"
+             href="https://maps.app.goo.gl/RSmurniR9BKBCxmz6"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Open BGS CORNER in Google Maps"></a>
+        </div>
+        <div class="corner-map-bar">
+          <span class="corner-map-addr">4th &amp; 17th Street Corner, Rigga Al Buteen
+            &mdash; near Deira Clock&nbsp;Tower</span>
+          <a class="map-link" href="https://maps.app.goo.gl/RSmurniR9BKBCxmz6"
+             target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M12 21s6.5-6.1 6.5-11A6.5 6.5 0 0 0 5.5 10c0 4.9 6.5 11 6.5 11z"/>
+              <circle cx="12" cy="10" r="2.4"/>
+            </g></svg>
+            <span>Open in Google&nbsp;Maps</span>
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ══════════════════ ENQUIRE ══════════════════ -->
@@ -422,6 +454,6 @@
     </div>
   </dialog>
 
-  <script src="main.js?v=45"></script>
+  <script src="main.js?v=46"></script>
 </body>
 </html>

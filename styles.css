@@ -898,6 +898,79 @@ em { font-style: italic; }
   text-shadow: 0 1px 16px rgba(0, 0, 0, .8);
 }
 
+/* ── The map ────────────────────────────────────────────────── */
+
+.corner-map { text-align: center; }
+.corner-map .kicker { justify-content: center; margin-bottom: 1.6rem; }
+
+.corner-map-frame {
+  position: relative;
+  height: clamp(280px, 40vw, 440px);
+  overflow: hidden;
+  border: 1px solid var(--gold-line);
+  background: var(--ink-2);
+}
+
+/* Google's tiles arrive white. Inverting and rotating the hue by half a turn
+   flips the sheet to black while returning water and parkland to roughly
+   their own colours; the sepia then pulls the whole plate towards the gold
+   the rest of the page is built from. */
+.corner-map-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;
+  filter: invert(.92) hue-rotate(180deg) saturate(.38)
+          brightness(.86) contrast(1.08) sepia(.36);
+}
+
+/* the click target, and the vignette that seats the plate in the page */
+.corner-map-hit {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  transition: background .5s var(--ease), box-shadow .5s var(--ease);
+  background: radial-gradient(120% 90% at 50% 50%,
+              transparent 40%, rgba(11, 9, 6, .55) 100%);
+  box-shadow: inset 0 0 0 1px rgba(201, 163, 90, 0);
+}
+
+.corner-map-hit:hover,
+.corner-map-hit:focus-visible {
+  background: radial-gradient(120% 90% at 50% 50%,
+              transparent 55%, rgba(11, 9, 6, .38) 100%);
+  box-shadow: inset 0 0 0 1px var(--gold-line);
+}
+
+.corner-map-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem 2rem;
+  padding: 1.1rem .2rem 0;
+  text-align: left;
+}
+
+/* the footer's copy of this button sits under a paragraph and carries a top
+   margin; on the bar it shares a row, so the margin comes off */
+.corner-map-bar .map-link { margin-top: 0; }
+
+.corner-map-addr {
+  font-size: .64rem;
+  line-height: 1.7;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+@media (max-width: 640px) {
+  .corner-map-bar { justify-content: center; text-align: center; }
+}
+
 
 
 /* ── Partnership band ───────────────────────────────────────── */
