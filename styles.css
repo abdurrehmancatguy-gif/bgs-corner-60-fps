@@ -483,6 +483,17 @@ em { font-style: italic; }
 
 .section { position: relative; padding: clamp(7rem, 15vw, 13rem) 0; }
 
+/* Every in-page target clears the fixed nav when its anchor is followed, so a
+   link lands on the section's opening line instead of behind the bar. The nav
+   measures 79px at the narrow end of --frame-inset and 95px at the wide end,
+   so 5rem on top of the inset clears it with room to spare at both. The
+   Enquire band is the one that matters most: the nav button is the site's
+   main call to action, and without this it landed with the seal under the
+   header. */
+#house, #oud, #corner, #partner {
+  scroll-margin-top: calc(var(--frame-inset) + 5rem);
+}
+
 .wrap {
   width: min(1180px, calc(100% - clamp(2.4rem, 8vw, 7rem)));
   margin-inline: auto;
@@ -736,7 +747,10 @@ em { font-style: italic; }
 .collection {
   background: linear-gradient(var(--ink-2), var(--ink));
   padding-block: clamp(1.8rem, 3.5vw, 2.4rem) clamp(2rem, 4vw, 2.8rem);
-  /* the fixed nav must not cover the kicker when the anchor is followed */
+  /* Deliberately tighter than the other sections: this one is sized so the
+     three cards and the heading all fit a single screen, and the extra
+     clearance the others use would push its last row out of view. Its own
+     top padding makes up the difference, so the kicker still clears. */
   scroll-margin-top: calc(var(--frame-inset) + 3.2rem);
 }
 
@@ -878,11 +892,16 @@ em { font-style: italic; }
 
 .corner-caption .kicker { margin-bottom: .9rem; }
 
+/* Set in capitals, so it needs the treatment capitals want: a little tracking
+   to stop the letters jamming, and a size a step down from the sentence case
+   it replaced — caps read larger at the same point size. */
 .corner-line {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(1.9rem, 4.4vw, 3.4rem);
-  line-height: 1.16;
+  font-size: clamp(1.6rem, 3.7vw, 2.9rem);
+  letter-spacing: .06em;
+  text-indent: .06em;
+  line-height: 1.2;
   color: var(--cream);
   /* two shadows: a tight one for edge contrast against the lit sign, a wide
      one for the pool — the plate is brighter now, so the text carries more
@@ -890,14 +909,26 @@ em { font-style: italic; }
   text-shadow: 0 1px 3px rgba(0, 0, 0, .55), 0 2px 40px rgba(0, 0, 0, .85);
 }
 
+/* The full address is far longer than the two words it replaced, so the
+   tracking comes in and the leading opens up to keep two readable lines. */
 .corner-where {
-  margin-top: 1rem;
-  font-size: .62rem;
-  letter-spacing: .34em;
-  text-indent: .34em;
+  margin-top: 1.1rem;
+  /* rem, not em: this element's own font is .6rem, so an em box here would be
+     little more than half the width it needs for the longer of the two lines */
+  max-width: min(34rem, 92vw);
+  font-size: .6rem;
+  letter-spacing: .2em;
+  text-indent: .2em;
+  line-height: 2;
   text-transform: uppercase;
   color: rgba(243, 234, 217, .82);
   text-shadow: 0 1px 16px rgba(0, 0, 0, .8);
+}
+
+/* on a phone the line break belongs to the text, not to the markup */
+@media (max-width: 640px) {
+  .corner-where br { display: none; }
+  .corner-where { letter-spacing: .14em; text-indent: .14em; }
 }
 
 /* ── The map ────────────────────────────────────────────────── */
@@ -1162,7 +1193,21 @@ em { font-style: italic; }
 
 .footer-mark { letter-spacing: .44em; }
 
-.footer-col { text-align: center; }
+/* Side-oriented: the outer columns anchor to the outer edges and the middle
+   one holds the centre, so the row reads as three columns spanning the page
+   rather than three centred blocks marooned in it. */
+.footer-col:first-child          { text-align: left; }
+.footer-col:nth-child(2)         { text-align: center; }
+.footer-col:last-child           { text-align: right; }
+
+/* the map button is inline-flex, so it follows the column's alignment on its
+   own — but the stacked phone layout wants everything back on one axis */
+@media (max-width: 720px) {
+  .footer-col,
+  .footer-col:first-child,
+  .footer-col:nth-child(2),
+  .footer-col:last-child { text-align: center; }
+}
 
 .footer-col p { color: var(--cream-dim); font-size: .89rem; line-height: 1.95; }
 
