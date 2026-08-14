@@ -1,7 +1,7 @@
 # BGS CORNER — Corner 60 FPS
 
 A scroll-driven website for **BGS CORNER**, the House of Oud — a perfumer
-selling rare ouds and perfumes from Rigga Al Buteen, Dubai. The hero scrubs a
+selling rare ouds and perfumes from Riggat Al Buteen, Dubai. The hero scrubs a
 301-frame product film (house seal → boxed flacons → shop) on a full-screen canvas
 as you scroll.
 

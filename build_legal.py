@@ -175,7 +175,7 @@ LEGAL = [
             "in Dubai, United Arab Emirates."]),
     ("Company", [
         "Legal Name: B G S Corner General Trading L.L.C.",
-        "4th & 17th Street Corner, Rigga Al Buteen, near Deira Clock Tower, Dubai, "
+        "4th & 17th Street Corner, Riggat Al Buteen, near Deira Clock Tower, Dubai, "
         "United Arab Emirates",
         f"Email: {EMAIL}",
         f"Phone: {PHONE}"]),
